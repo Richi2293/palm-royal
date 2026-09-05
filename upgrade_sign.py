@@ -11,7 +11,7 @@ for filename in ['build_world.py','build_city.py']:
             exec(compile(ast.Module(body=[node],type_ignores=[]),filename,'exec'))
 bpy.ops.wm.open_mainfile(filepath=str(ROOT/'coastal-city-interiors.blend'))
 scene=bpy.context.scene
-CURRENT_GROUP='Miramar - Vice-inspired neon signage'
+CURRENT_GROUP='Miramar - Art Deco neon signage'
 MESH_CACHE={}
 for obj in list(scene.objects):
     if obj.name.startswith(('Cafe marquee','Cafe tagline','Cafe sign glow')):
