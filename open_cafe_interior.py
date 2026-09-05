@@ -2,7 +2,14 @@
 from pathlib import Path
 import bpy
 from mathutils import Vector
-root=Path('/Users/riccardo/Downloads/gta-blender-world')
+root=Path(__file__).resolve().parent
+if bpy.app.background:
+    raise SystemExit(
+        'open_cafe_interior.py backs up the current session before switching scenes, which only '
+        'makes sense in an interactive Blender. In background mode that backup '
+        'would be an empty startup scene, overwriting a real one. Open Blender '
+        'and run this from the Scripting workspace instead.'
+    )
 bpy.ops.wm.save_as_mainfile(filepath=str(root/'detailed-before-interiors.blend'))
 bpy.ops.wm.open_mainfile(filepath=str(root/'coastal-city-interiors.blend'))
 camera=bpy.data.objects['08 - Inside Cafe Miramar']

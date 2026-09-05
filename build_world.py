@@ -45,6 +45,8 @@ red = material('Sports car vermilion', (.72,.045,.025), metallic=.55, roughness=
 rubber = material('Tire rubber', (.015,.017,.021), roughness=.9)
 
 # Fine procedural bump keeps the larger surfaces from looking perfectly smooth.
+# Load-bearing comment: build_city.py splits this file on the marker above to
+# reuse everything before it. Do not reword the first line without updating it.
 for surface, scale, strength in [(road,95,.22),(sand,130,.15),(coral,45,.12),(teal,45,.12)]:
     nodes = surface.node_tree.nodes
     noise = nodes.new('ShaderNodeTexNoise')
