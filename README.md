@@ -10,13 +10,11 @@ There is no manual modelling in this project. Every building, palm tree, kerb st
 
 It is a personal experiment, run for the fun of finding out how far current models can push a 3D scene when the only interface they have is code.
 
-**[Explore the city in your browser](https://richi2293.github.io/palm-royal/)** ·
 [How it was built](docs/how-it-was-built.md) ·
 [Asset credits](docs/asset-credits.md)
 
 [![Blender 5.1](https://img.shields.io/badge/Blender-5.1-orange)](https://www.blender.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE)
-[![Live viewer](https://img.shields.io/badge/demo-live-2fe0bd)](https://richi2293.github.io/palm-royal/)
 
 ## The five stages
 
@@ -54,7 +52,11 @@ Each stage opens the scene the previous one saved and changes it, so the city gr
 
 ## See it
 
-**In the browser.** [richi2293.github.io/palm-royal](https://richi2293.github.io/palm-royal/) loads the stage 2 city as 3.7 MB of Draco-compressed geometry. Orbit it, or switch to walk mode and use W A S D to move down the boulevards. Nothing to install.
+**In the browser.** `viewer/` is a self-contained page that loads the stage 2 city as 3.7 MB of Draco-compressed geometry. Orbit it, or switch to walk mode and use W A S D to move down the boulevards. It is not hosted anywhere yet, so serve the folder and open it:
+
+```sh
+python3 -m http.server 8080 --directory viewer
+```
 
 **In Blender.** The finished city is `scenes/palm-royal-city.blend`. No Blender scene is tracked here: that file is 407 MB, almost all of it packed 4K textures, and GitHub caps a single file at 100 MB. Build it by running the pipeline below, then open it in Blender 5.1.2 or later. See [docs/city.md](docs/city.md) for the cameras and the walk navigation controls.
 
@@ -117,7 +119,7 @@ assets/     manifests for the CC0 assets, fetched at build time
 
 ## Stack
 
-Blender 5.1.2 and its Python API, Cycles for rendering, Poly Haven for CC0 scanned materials and props, three.js for the web viewer, GitHub Pages for hosting.
+Blender 5.1.2 and its Python API, Cycles for rendering, Poly Haven for CC0 scanned materials and props, three.js for the web viewer.
 
 ## Licence
 
