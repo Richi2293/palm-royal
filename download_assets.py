@@ -44,8 +44,14 @@ for name,resolution in textures.items():
 hdri=fetch_json('venice_sunset')['hdri']['2k']['hdr']
 jobs.append((ROOT/'venice_sunset.hdr',hdri))
 base='https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/'
-for relative in ['GLB/CarConcept.glb','LICENSE.md','README.md']:
-    jobs.append((ROOT/'CarConcept'/Path(relative).name,{'url':base+relative}))
+# build_showcase.py imports the uncompressed binary. Upstream calls it
+# CarConcept.glb too, so it is renamed on the way in to sit alongside the
+# Draco-compressed GLB that inspect_assets.py opens.
+for relative,target in [('GLB/CarConcept.glb','CarConcept.glb'),
+                        ('glTF-Binary/CarConcept.glb','CarConcept-uncompressed.glb'),
+                        ('LICENSE.md','LICENSE.md'),
+                        ('README.md','README.md')]:
+    jobs.append((ROOT/'CarConcept'/target,{'url':base+relative}))
 with ThreadPoolExecutor(max_workers=6) as executor:
     list(executor.map(download,jobs))
 (ROOT/'download-manifest.json').write_text(json.dumps({'models':models,'textures':textures,'files':[str(path.relative_to(ROOT)) for path,_ in jobs]},indent=2))
