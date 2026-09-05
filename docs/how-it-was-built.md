@@ -60,6 +60,8 @@ Each generating stage sets an explicit seed before it places anything:
 
 Same scripts, same Blender version, same city. This matters more than it sounds: without it, "the palm on the corner is clipping the awning" is not a reproducible bug report, and the whole feedback loop stops working.
 
+The seeding covers geometry, not pixels. Rebuilding from a clean clone reproduces the two untextured stages pixel for pixel, while the textured ones differ by a level or two out of 255, spread as fine noise across most of the frame: Cycles accumulates samples in thread completion order and the denoiser follows. Structural mistakes do not look like that. When an asset is missing or a material is wrong, whole regions move at once.
+
 ## Linked duplicates, on purpose
 
 The stage 2 city is 11,928 objects sharing 1,090 unique meshes. Repeated props are instances of shared mesh data rather than independent copies. This was a deliberate choice while building, and it is the only reason the web viewer exists: the glTF export carries 1,571 unique meshes referenced by 11,948 nodes, which compresses to 3.7 MB, and the viewer collapses those nodes back into instanced draw calls in the browser.

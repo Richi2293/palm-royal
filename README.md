@@ -62,7 +62,9 @@ python3 -m http.server 8080 --directory viewer
 
 ## Reproduce
 
-Everything is deterministic. The same scripts on the same Blender version produce the same scene, down to the position of each palm, because every stage seeds its random number generator explicitly.
+The geometry is deterministic. The same scripts on the same Blender version produce the same scene, down to the position of each palm, because every stage seeds its random number generator explicitly.
+
+A full rebuild from a clean clone takes about ten minutes and leaves 1.9 GB on disk, most of it the intermediate scenes. Measured on an Apple M2 Pro with 16 GB: fourteen seconds for stage 1, twenty-seven for stage 2, and between one and three minutes for each of the four Cycles stages.
 
 ```sh
 BLENDER=/Applications/Blender.app/Contents/MacOS/Blender
@@ -89,6 +91,8 @@ $BLENDER --background --factory-startup --python viewer/export_web.py
 `download_assets.py` pulls roughly 500 MB from Poly Haven and verifies every file against the provider checksum. Only the manifests are tracked here, so the asset set stays reproducible without committing the binaries.
 
 The pipeline leaves one scene per stage in `scenes/`. Only the last one, `palm-royal-city.blend`, is the finished city; the earlier four are intermediates that exist because each stage opens what the previous one saved, and they can be deleted once the run completes.
+
+The renders are a shade less reproducible than the scenes. The two untextured stages come back pixel for pixel identical, but Cycles accumulates samples in thread completion order and the denoiser inherits that, so the textured stages land within a couple of levels out of 255 rather than byte for byte. The difference is invisible and it is noise, not content.
 
 ## What this is not
 
