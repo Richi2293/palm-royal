@@ -17,10 +17,13 @@ make all        # download the source assets, then build every scene
 make verify     # confirm the rebuilt scenes match their reference counts
 ```
 
-The build expects Blender at the macOS default location. Point it anywhere:
+Blender is located automatically: on `PATH` first, then at the usual install
+locations on macOS and Linux. `make check` reports which one is in use and
+whether its version is supported. Point the build at a specific copy when you
+keep several around, or when yours lives somewhere unusual:
 
 ```sh
-make all BLENDER=/usr/local/bin/blender
+make all BLENDER=/path/to/blender
 ```
 
 ## What is in here
@@ -96,10 +99,12 @@ differ in their noise. They match visually; they do not match by checksum, so
 
 ## Requirements
 
-- **Blender 5.1.2.** This is what the pipeline is tested against. Later 5.x
-  releases will probably work; Blender 6 will not, since the scripts still call
-  `use_nodes`, which is deprecated and scheduled for removal.
+- **Blender 5.1 or later**, tested against 5.1.2. The build refuses to start on
+  anything older rather than failing halfway through with an unrelated error,
+  and warns on Blender 6, which removes the `use_nodes` calls the scripts still
+  make.
 - **Python 3** for the two download scripts. They use only the standard library.
+- **GNU make**, and a POSIX shell for it to run recipes in.
 - **Network access** on the first build, for roughly 500 MB of source assets.
   Downloads are checksum-verified against the provider manifests and skipped
   when the files are already present.
@@ -107,6 +112,25 @@ differ in their noise. They match visually; they do not match by checksum, so
   Apple M2 Pro, `make diorama` takes about 15 seconds and `make city` about 45.
   The later stages are slower: they import the downloaded assets and render
   larger images.
+
+### Platforms
+
+Developed on macOS, and written to not depend on it. Every script derives its
+paths from its own location and reads files as UTF-8 explicitly, so nothing
+depends on the working directory or on the system locale.
+
+On **Linux**, Blender is found on `PATH` or at `/usr/bin`, `/usr/local/bin`,
+`/snap/bin` or `/opt/blender`. Nothing else should differ.
+
+On **Windows**, run make from Git Bash or WSL and pass the executable, since the
+recipes are shell commands:
+
+```sh
+make all BLENDER='/c/Program Files/Blender Foundation/Blender 5.1/blender.exe'
+```
+
+Reports from either platform are welcome: they are reasoned about here, not
+tested on hardware.
 
 ## What is not in the repository
 
