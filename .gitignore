@@ -11,5 +11,10 @@ assets/*
 assets/*/*
 !assets/*/*.json
 
+# Renders written by the build scripts into the repository root. They are
+# outputs like the scenes above, so a rebuild never dirties the working tree.
+# The optimised copies used by the documentation live in docs/ and are tracked.
+/*.png
+
 # macOS
 .DS_Store

@@ -1,10 +1,10 @@
-00:00.362  blend            | Read blend: "/Users/riccardo/Downloads/gta-blender-world/coastal-city-detailed.blend"
+00:00.362  blend            | Read blend: "coastal-city-detailed.blend"
 build_world.py:17: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
 Info: No new files have been packed
 Info: Saved as "coastal-city-detailed.blend"
 CLEANUP 343
-01:11.890  render           | Saved: '/Users/riccardo/Downloads/gta-blender-world/showcase-hero.png'
-02:12.601  render           | Saved: '/Users/riccardo/Downloads/gta-blender-world/showcase-closeup.png'
+01:11.890  render           | Saved: 'showcase-hero.png'
+02:12.601  render           | Saved: 'showcase-closeup.png'
 VALIDATION {'objects': 12777, 'packed_images': 97, 'missing_images': []}
 Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
 

@@ -1,4 +1,4 @@
-00:00.360  blend            | Read blend: "/Users/riccardo/Downloads/gta-blender-world/coastal-city.blend"
+00:00.360  blend            | Read blend: "coastal-city.blend"
 build_world.py:17: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
 ASSET_LOADED outdoor_table_chair_set_01 (0.7760046124458313, 1.8310472965240479, 0.8585816025733948)
 ASSET_LOADED potted_plant_02 (0.7011570334434509, 0.6573866009712219, 0.8411787152290344)
@@ -111,8 +111,8 @@ CAR_BOUNDS (2.7283554077148438, 4.357386589050293, 1.307953953742981)
 Info: Packed 84 file(s)
 Info: Saved as "coastal-city-detailed.blend"
 SHOWCASE_SAVED 13099
-01:12.782  render           | Saved: '/Users/riccardo/Downloads/gta-blender-world/showcase-hero.png'
-02:13.064  render           | Saved: '/Users/riccardo/Downloads/gta-blender-world/showcase-closeup.png'
+01:12.782  render           | Saved: 'showcase-hero.png'
+02:13.064  render           | Saved: 'showcase-closeup.png'
 SHOWCASE_COMPLETE
 Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
 

@@ -1,5 +1,5 @@
 Traceback (most recent call last):
-  File "/Users/riccardo/Downloads/gta-blender-world/inspect_assets.py", line 17, in <module>
+  File "inspect_assets.py", line 17, in <module>
     bpy.ops.import_scene.gltf(filepath=str(root/'CarConcept/CarConcept.glb'))
     ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 RuntimeError: Error: Extension KHR_texture_basisu is not available on this addon version

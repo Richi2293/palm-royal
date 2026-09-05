@@ -1,4 +1,4 @@
-00:02.310  blend            | Read blend: "/Users/riccardo/Downloads/gta-blender-world/coastal-city-detailed.blend"
+00:02.310  blend            | Read blend: "coastal-city-detailed.blend"
 build_world.py:17: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
 ASSET_LOADED bar_chair_round_01 (0.4831501841545105, 0.48599570989608765, 0.7505484819412231)
 ASSET_LOADED outdoor_table_chair_set_01 (0.7760046124458313, 1.8310472965240479, 0.8585816025733948)
@@ -8,9 +8,9 @@ ASSET_LOADED carrot_cake (0.22542136907577515, 0.22538353502750397, 0.0975729674
 Info: Packed 30 file(s)
 Info: Saved as "coastal-city-interiors.blend"
 INTERIOR_SAVED 14066
-01:13.162  render           | Saved: '/Users/riccardo/Downloads/gta-blender-world/miramar-exterior.png'
-02:17.387  render           | Saved: '/Users/riccardo/Downloads/gta-blender-world/miramar-interior.png'
-03:19.404  render           | Saved: '/Users/riccardo/Downloads/gta-blender-world/miramar-windows.png'
+01:13.162  render           | Saved: 'miramar-exterior.png'
+02:17.387  render           | Saved: 'miramar-interior.png'
+03:19.404  render           | Saved: 'miramar-windows.png'
 INTERIOR_COMPLETE
 Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
 
