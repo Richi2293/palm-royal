@@ -382,7 +382,7 @@ for screen in bpy.data.screens:
             space.shading.type='MATERIAL'
             space.overlay.show_overlays=False
 scene['Quality upgrade']='Detailed central block with real PBR textures, imported scan assets, detailed palms and a CC BY concept car. The rest of the city remains a stylized context.'
-scene['Asset credits']='Powered by Poly Haven (CC0 assets); Car Concept by Eric Chadwick, Darmstadt Graphics Group GmbH, CC BY 4.0. See ASSET-CREDITS.md.'
+scene['Asset credits']='Powered by Poly Haven (CC0 assets); Car Concept by Eric Chadwick, Darmstadt Graphics Group GmbH, CC BY 4.0. See docs/asset-credits.md.'
 bpy.ops.file.pack_all()
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'coastal-city-detailed.blend'))
 print('SHOWCASE_SAVED',len(scene.objects),flush=True)
