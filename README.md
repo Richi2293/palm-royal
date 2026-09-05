@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="showcase-hero.png" alt="Dusk street view of the Palm Royal hotel and Cafe Miramar, with a neon sign, palms and a parked concept car">
+  <img src="renders/showcase-hero.png" alt="Dusk street view of the Palm Royal hotel and Cafe Miramar, with a neon sign, palms and a parked concept car">
 </p>
 
 # Palm Royal
@@ -26,31 +26,31 @@ Each stage opens the scene the previous one saved and changes it, so the city gr
 
 `build_world.py` builds a single Art Deco block on a floating slab: a hotel, a diner, a social club, ten palms, three cars and street furniture. 669 objects, all procedural, no external assets.
 
-<img src="palm-royal-preview.png" alt="Isometric view of a pastel Art Deco street block on a floating slab, with palms and parked cars" width="640">
+<img src="renders/palm-royal-preview.png" alt="Isometric view of a pastel Art Deco street block on a floating slab, with palms and parked cars" width="640">
 
 ### 2. A city around it
 
 `build_city.py` expands the block into a 280 × 250 metre city: nine districts, six downtown towers, four boulevards and four avenues, a marina with fifteen yachts, a beach, an observation wheel. The result is 11,928 objects sharing 1,090 unique meshes, which is what later makes it small enough to stream into a browser.
 
-<img src="coastal-city-aerial.png" alt="Aerial view of the full coastal city at dusk, with towers, a marina and a beach" width="420"> <img src="coastal-city-street.png" alt="Street-level view down a boulevard between mid-rise buildings, with a car in the foreground" width="420">
+<img src="renders/coastal-city-aerial.png" alt="Aerial view of the full coastal city at dusk, with towers, a marina and a beach" width="420"> <img src="renders/coastal-city-street.png" alt="Street-level view down a boulevard between mid-rise buildings, with a car in the foreground" width="420">
 
 ### 3. One block, at full quality
 
 `build_showcase.py`, `refine_showcase.py` and `finalize_showcase.py` rebuild the original Palm Royal block with scanned PBR materials up to 4K, projecting cornices, shutters, balcony railings, individually modelled palm leaflets, wet asphalt, kerb stones and a drivable-looking concept car. The rest of the city stays stylized, which is the point: it is a quality study against a low-detail backdrop.
 
-<img src="showcase-closeup.png" alt="Close-up of Cafe Miramar at dusk, with a glowing sign, stone columns and pavement tables" width="640">
+<img src="renders/showcase-closeup.png" alt="Close-up of Cafe Miramar at dusk, with a glowing sign, stone columns and pavement tables" width="640">
 
 ### 4. Real windows and real interiors
 
 `upgrade_windows_cafe.py` replaces glass panels painted onto solid walls with actual openings: sills, mullions, curtains, room depth, furniture. Cafe Miramar gets a full interior with a marble bar, booths, an espresso machine and a pastry vitrine, visible from the street through the open front.
 
-<img src="miramar-windows.png" alt="Close-up of hotel windows with real openings, brass frames, balconies and curtains" width="420"> <img src="miramar-interior.png" alt="Interior of Cafe Miramar with pendant lights, timber floor, booths and a long bar" width="420">
+<img src="renders/miramar-windows.png" alt="Close-up of hotel windows with real openings, brass frames, balconies and curtains" width="420"> <img src="renders/miramar-interior.png" alt="Interior of Cafe Miramar with pendant lights, timber floor, booths and a long bar" width="420">
 
 ### 5. Neon
 
 `upgrade_sign.py` builds an original Art Deco marquee for the cafe, with emissive tubing and a glow pass in the compositor.
 
-<img src="miramar-neon-sign.png" alt="Cafe Miramar at night with a pink and cyan neon marquee over the pavement tables" width="640">
+<img src="renders/miramar-neon-sign.png" alt="Cafe Miramar at night with a pink and cyan neon marquee over the pavement tables" width="640">
 
 ## See it
 
@@ -58,7 +58,7 @@ Three ways in, from no effort to full rebuild.
 
 **In the browser.** [richi2293.github.io/palm-royal](https://richi2293.github.io/palm-royal/) loads the stage 2 city as 3.7 MB of Draco-compressed geometry. Orbit it, or switch to walk mode and use W A S D to move down the boulevards. Nothing to install.
 
-**In Blender.** `palm-royal.blend` and `coastal-city.blend` are small enough to be tracked in this repository, so you can clone and open them directly in Blender 5.1.2 or later. See [docs/city.md](docs/city.md) for the cameras and the walk navigation controls.
+**In Blender.** `scenes/palm-royal.blend` and `scenes/coastal-city.blend` are small enough to be tracked in this repository, so you can clone and open them directly in Blender 5.1.2 or later. See [docs/city.md](docs/city.md) for the cameras and the walk navigation controls.
 
 **From scratch.** The stage 3, 4 and 5 scenes are 280 to 430 MB each and are not tracked. Rebuild them with the pipeline below.
 
@@ -96,6 +96,18 @@ $BLENDER --background --factory-startup --python viewer/export_web.py
 - Not a full-city asset pass. Only the central block got the high-quality treatment. Zoom into anything else and it is deliberately simple geometry.
 - Not built from ripped assets. Nothing here comes from any commercial video game. The architecture is original, the third-party props are CC0 from Poly Haven, and the concept car is CC BY. Full sourcing in [docs/asset-credits.md](docs/asset-credits.md).
 - Not affiliated with Rockstar Games. "GTA-inspired" describes a visual mood: sun-bleached Art Deco, palms and neon.
+
+## Layout
+
+```
+scenes/     Blender scenes, one per stage. Open these.
+renders/    the Cycles output of each stage
+viewer/     the three.js browser viewer and its glTF export script
+docs/       stage guides, the build story, asset credits
+logs/       build logs from the original runs
+assets/     manifests for the CC0 assets, fetched at build time
+*.py        the pipeline itself, run in the order given above
+```
 
 ## Documentation
 

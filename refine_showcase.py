@@ -5,11 +5,13 @@ from pathlib import Path
 import bpy
 from mathutils import Vector
 ROOT=Path(__file__).resolve().parent
+SCENES=ROOT/'scenes'
+RENDERS=ROOT/'renders'
 for filename in ['build_world.py','build_city.py']:
     for node in ast.parse((ROOT/filename).read_text()).body:
         if isinstance(node,ast.FunctionDef) and node.name in ['material','collection','box','rod']:
             exec(compile(ast.Module(body=[node],type_ignores=[]),filename,'exec'))
-bpy.ops.wm.open_mainfile(filepath=str(ROOT/'coastal-city-detailed.blend'))
+bpy.ops.wm.open_mainfile(filepath=str(SCENES/'coastal-city-detailed.blend'))
 scene=bpy.context.scene
 CURRENT_GROUP='Showcase - Cafe tabletop details'
 MESH_CACHE={}
@@ -55,13 +57,13 @@ hero.data.lens=25
 scene.camera=hero
 scene.render.resolution_x=1800
 scene.render.resolution_y=1250
-scene.render.filepath=str(ROOT/'showcase-hero.png')
+scene.render.filepath=str(RENDERS/'showcase-hero.png')
 bpy.ops.file.pack_all()
-bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'coastal-city-detailed.blend'))
+bpy.ops.wm.save_as_mainfile(filepath=str(SCENES/'coastal-city-detailed.blend'))
 print('CLEANUP',removed,flush=True)
 bpy.ops.render.render(write_still=True)
 scene.camera=bpy.data.objects['07 - Cafe materials and street props']
-scene.render.filepath=str(ROOT/'showcase-closeup.png')
+scene.render.filepath=str(RENDERS/'showcase-closeup.png')
 scene.render.resolution_x=1600
 scene.render.resolution_y=1100
 bpy.ops.render.render(write_still=True)

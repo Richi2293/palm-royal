@@ -18,13 +18,13 @@ Three models worked on this city: Claude (through Claude Code), GPT 5.6 and GPT 
 The obvious way to build a city in scripts is one big generator that produces the final scene. That is not what happened. Each stage opens the `.blend` the previous stage saved, changes part of it, and saves under a new name:
 
 ```
-build_world.py       ->  palm-royal.blend
-build_city.py        ->  coastal-city.blend
-build_showcase.py    ->  coastal-city-detailed.blend   (opens coastal-city.blend)
-refine_showcase.py   ->  coastal-city-detailed.blend   (in place)
-finalize_showcase.py ->  coastal-city-detailed.blend   (in place)
-upgrade_windows_cafe.py -> coastal-city-interiors.blend
-upgrade_sign.py      ->  coastal-city-neon.blend
+build_world.py       ->  scenes/palm-royal.blend
+build_city.py        ->  scenes/coastal-city.blend
+build_showcase.py    ->  scenes/coastal-city-detailed.blend   (opens scenes/coastal-city.blend)
+refine_showcase.py   ->  scenes/coastal-city-detailed.blend   (in place)
+finalize_showcase.py ->  scenes/coastal-city-detailed.blend   (in place)
+upgrade_windows_cafe.py -> scenes/coastal-city-interiors.blend
+upgrade_sign.py      ->  scenes/coastal-city-neon.blend
 ```
 
 This falls out of how the work was requested. Each session asked for a change to what already existed, so each script was written to mutate a saved scene rather than to rebuild the world. It has a real cost: to reproduce stage 5 you must run all seven scripts in order, and a change to stage 2 invalidates everything downstream.

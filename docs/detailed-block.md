@@ -1,6 +1,6 @@
 # Coastal City: Detailed Central Block
 
-Open `coastal-city-detailed.blend`. The large coastal city is preserved, with a higher-detail showcase around Palm Royal and Café Miramar near world coordinates (30, -14).
+Open `scenes/coastal-city-detailed.blend`. The large coastal city is preserved, with a higher-detail showcase around Palm Royal and Café Miramar near world coordinates (30, -14).
 
 ## What was upgraded
 
@@ -26,11 +26,11 @@ Material Preview is useful for editing. F12 renders the actual scene lighting an
 
 ## Outputs and sources
 
-- `showcase-hero.png`: 1800 × 1250 overview of the detailed block.
-- `showcase-closeup.png`: 1600 × 1100 cafe close-up.
+- `renders/showcase-hero.png`: 1800 × 1250 overview of the detailed block.
+- `renders/showcase-closeup.png`: 1600 × 1100 cafe close-up.
 - `asset-credits.md`: source links, authors, licenses, and modifications.
 - `assets/`: original downloaded resources and manifests.
-- `coastal-city-before-detail.blend`: preserved session before loading the new project.
+- `scenes/coastal-city-before-detail.blend`: preserved session before loading the new project.
 
 ## Reproduce
 
@@ -39,4 +39,4 @@ After `download_assets.py` completes, run these scripts in order with Blender in
 2. `refine_showcase.py`
 3. `finalize_showcase.py`
 
-They use `coastal-city.blend` as the starting scene and overwrite only the detailed project and its renders.
+They use `scenes/coastal-city.blend` as the starting scene and overwrite only the detailed project and its renders.

@@ -3,7 +3,9 @@ from pathlib import Path
 import bpy
 from mathutils import Vector
 root=Path(__file__).resolve().parent
-bpy.ops.wm.open_mainfile(filepath=str(root/'coastal-city-detailed.blend'))
+SCENES=root/'scenes'
+RENDERS=root/'renders'
+bpy.ops.wm.open_mainfile(filepath=str(SCENES/'coastal-city-detailed.blend'))
 scene=bpy.context.scene
 camera=bpy.data.objects['06 - Detailed Palm Royal block']
 camera.rotation_euler=(Vector((31,-12,10))-camera.location).to_track_quat('-Z','Y').to_euler()
@@ -23,12 +25,12 @@ links.new(background.outputs[0],mix.inputs[1])
 links.new(sky.outputs[0],mix.inputs[2])
 links.new(mix.outputs[0],output.inputs['Surface'])
 scene.camera=camera
-scene.render.filepath=str(root/'showcase-hero.png')
-bpy.ops.wm.save_as_mainfile(filepath=str(root/'coastal-city-detailed.blend'))
+scene.render.filepath=str(RENDERS/'showcase-hero.png')
+bpy.ops.wm.save_as_mainfile(filepath=str(SCENES/'coastal-city-detailed.blend'))
 bpy.ops.render.render(write_still=True)
 scene.camera=bpy.data.objects['07 - Cafe materials and street props']
 scene.render.resolution_x=1600
 scene.render.resolution_y=1100
-scene.render.filepath=str(root/'showcase-closeup.png')
+scene.render.filepath=str(RENDERS/'showcase-closeup.png')
 bpy.ops.render.render(write_still=True)
 print('FINAL_SHOWCASE_COMPLETE',flush=True)

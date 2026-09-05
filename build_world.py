@@ -6,6 +6,8 @@ import bpy
 from mathutils import Vector
 
 OUTPUT = Path(__file__).resolve().parent
+SCENES = OUTPUT / 'scenes'
+RENDERS = OUTPUT / 'renders'
 random.seed(18)
 bpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete(use_global=False)
@@ -311,7 +313,7 @@ for obj in list(scene.objects):
     collection.objects.link(obj)
 bpy.ops.object.select_all(action='DESELECT')
 scene.render.image_settings.file_format='PNG'
-scene.render.filepath=str(OUTPUT/'palm-royal-preview.png')
-bpy.ops.wm.save_as_mainfile(filepath=str(OUTPUT/'palm-royal.blend'))
+scene.render.filepath=str(RENDERS / 'palm-royal-preview.png')
+bpy.ops.wm.save_as_mainfile(filepath=str(SCENES / 'palm-royal.blend'))
 bpy.ops.render.render(write_still=True)
 print('WORLD_BUILD_COMPLETE',len(scene.objects))

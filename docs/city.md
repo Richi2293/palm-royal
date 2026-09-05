@@ -11,7 +11,7 @@ The expanded city contains 280 × 250 meters of terrain (70,000 square meters), 
 - Rooftop pools, balconies, shop signs, traffic signals, vehicles and pedestrian scale figures.
 
 ## Open and explore
-Open `coastal-city.blend` in Blender 5.1.2 or later. The default view is the aerial camera.
+Open `scenes/coastal-city.blend` in Blender 5.1.2 or later. The default view is the aerial camera.
 
 The Exploration cameras collection contains:
 1. Entire coastal city.
@@ -27,9 +27,9 @@ For first-person exploration, use View > Navigation > Walk Navigation from the 3
 Material Preview provides a convenient editing view. Rendered shading and F12 show the actual lighting; performance depends on the machine. The saved project uses Cycles and denoising. Bright-sign glow is applied in final renders.
 
 ## Files
-- `coastal-city.blend`: expanded editable project.
-- `coastal-city-aerial.png`: overview render.
-- `coastal-city-street.png`: pedestrian-level render.
+- `scenes/coastal-city.blend`: expanded editable project.
+- `renders/coastal-city-aerial.png`: overview render.
+- `renders/coastal-city-street.png`: pedestrian-level render.
 - `build_city.py`: reproducible scene-generation script.
 - `city-build.log`: execution log.
 

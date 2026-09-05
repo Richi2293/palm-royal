@@ -5,11 +5,13 @@ from pathlib import Path
 import bpy
 from mathutils import Vector
 ROOT=Path(__file__).resolve().parent
+SCENES=ROOT/'scenes'
+RENDERS=ROOT/'renders'
 for filename in ['build_world.py','build_city.py']:
     for node in ast.parse((ROOT/filename).read_text()).body:
         if isinstance(node,ast.FunctionDef) and node.name in ['material','text','area_light','collection','place','box','rod']:
             exec(compile(ast.Module(body=[node],type_ignores=[]),filename,'exec'))
-bpy.ops.wm.open_mainfile(filepath=str(ROOT/'coastal-city-interiors.blend'))
+bpy.ops.wm.open_mainfile(filepath=str(SCENES/'coastal-city-interiors.blend'))
 scene=bpy.context.scene
 CURRENT_GROUP='Miramar - Vice-inspired neon signage'
 MESH_CACHE={}
@@ -92,8 +94,8 @@ scene.camera=bpy.data.objects['07 - Cafe materials and street props']
 scene.cycles.samples=40
 scene.render.resolution_x=1600
 scene.render.resolution_y=1100
-scene.render.filepath=str(ROOT/'miramar-neon-sign.png')
+scene.render.filepath=str(RENDERS/'miramar-neon-sign.png')
 scene['Sign direction']='Original tropical Art Deco signage inspired by 1980s Miami nightlife; aqua and coral neon, dimensional letters, sunrise waves, and a double-sided blade sign.'
-bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'coastal-city-neon.blend'))
+bpy.ops.wm.save_as_mainfile(filepath=str(SCENES/'coastal-city-neon.blend'))
 bpy.ops.render.render(write_still=True)
 print('NEON_COMPLETE',flush=True)

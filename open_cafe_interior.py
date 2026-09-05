@@ -2,9 +2,10 @@
 from pathlib import Path
 import bpy
 from mathutils import Vector
-root=Path('/Users/riccardo/Downloads/gta-blender-world')
-bpy.ops.wm.save_as_mainfile(filepath=str(root/'detailed-before-interiors.blend'))
-bpy.ops.wm.open_mainfile(filepath=str(root/'coastal-city-interiors.blend'))
+root=Path(__file__).resolve().parent
+SCENES=root/'scenes'
+bpy.ops.wm.save_as_mainfile(filepath=str(SCENES/'detailed-before-interiors.blend'))
+bpy.ops.wm.open_mainfile(filepath=str(SCENES/'coastal-city-interiors.blend'))
 camera=bpy.data.objects['08 - Inside Cafe Miramar']
 rotation=camera.rotation_euler.to_quaternion()
 for screen in bpy.data.screens:
@@ -22,4 +23,4 @@ for screen in bpy.data.screens:
             space.shading.use_scene_world=True
             space.show_gizmo=False
             space.overlay.show_overlays=False
-bpy.ops.wm.save_as_mainfile(filepath=str(root/'coastal-city-interiors.blend'))
+bpy.ops.wm.save_as_mainfile(filepath=str(SCENES/'coastal-city-interiors.blend'))

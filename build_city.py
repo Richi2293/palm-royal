@@ -7,6 +7,8 @@ import bpy
 from mathutils import Vector
 
 OUTPUT = Path(__file__).resolve().parent
+SCENES = OUTPUT / 'scenes'
+RENDERS = OUTPUT / 'renders'
 SOURCE = (OUTPUT / 'build_world.py').read_text()
 # Reuse the original palette and prop constructors while replacing the layout.
 exec(SOURCE[:SOURCE.index('# Fine procedural')])
@@ -335,12 +337,12 @@ scene['City dimensions']='280 x 250 meters of land, plus a 220 x 42 meter marina
 scene['Scale comparison']='30.4 times the original 59 x 39 meter land area'
 scene['Explore']='Use camera 02 or 04; Shift+accent grave enters Walk Navigation. WASD moves, mouse looks, wheel adjusts speed.'
 bpy.ops.object.select_all(action='DESELECT')
-scene.render.filepath=str(OUTPUT/'coastal-city-aerial.png')
-bpy.ops.wm.save_as_mainfile(filepath=str(OUTPUT/'coastal-city.blend'))
+scene.render.filepath=str(RENDERS / 'coastal-city-aerial.png')
+bpy.ops.wm.save_as_mainfile(filepath=str(SCENES / 'coastal-city.blend'))
 print('CITY_SAVED',len(scene.objects),flush=True)
 bpy.ops.render.render(write_still=True)
 scene.camera=street
-scene.render.filepath=str(OUTPUT/'coastal-city-street.png')
+scene.render.filepath=str(RENDERS / 'coastal-city-street.png')
 scene.render.resolution_x=1500
 scene.render.resolution_y=1000
 bpy.ops.render.render(write_still=True)

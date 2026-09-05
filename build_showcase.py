@@ -6,13 +6,15 @@ from pathlib import Path
 import bpy
 from mathutils import Vector, Matrix
 ROOT=Path(__file__).resolve().parent
+SCENES=ROOT/'scenes'
+RENDERS=ROOT/'renders'
 ASSETS=ROOT/'assets'
 # Reuse only constructors, never the scene-generation statements.
 for filename in ['build_world.py','build_city.py']:
     for node in ast.parse((ROOT/filename).read_text()).body:
         if isinstance(node,ast.FunctionDef) and node.name in ['material','text','area_light','collection','place','box','rod']:
             exec(compile(ast.Module(body=[node],type_ignores=[]),filename,'exec'))
-bpy.ops.wm.open_mainfile(filepath=str(ROOT/'coastal-city.blend'))
+bpy.ops.wm.open_mainfile(filepath=str(SCENES/'coastal-city.blend'))
 scene=bpy.context.scene
 random.seed(73)
 CURRENT_GROUP='Showcase - Detailed architecture'
@@ -371,7 +373,7 @@ scene.cycles.use_denoising=True
 scene.render.resolution_x=1800
 scene.render.resolution_y=1250
 scene.render.resolution_percentage=100
-scene.render.filepath=str(ROOT/'showcase-hero.png')
+scene.render.filepath=str(RENDERS/'showcase-hero.png')
 scene.view_settings.exposure=.3
 for screen in bpy.data.screens:
     for area in screen.areas:
@@ -384,11 +386,11 @@ for screen in bpy.data.screens:
 scene['Quality upgrade']='Detailed central block with real PBR textures, imported scan assets, detailed palms and a CC BY concept car. The rest of the city remains a stylized context.'
 scene['Asset credits']='Powered by Poly Haven (CC0 assets); Car Concept by Eric Chadwick, Darmstadt Graphics Group GmbH, CC BY 4.0. See docs/asset-credits.md.'
 bpy.ops.file.pack_all()
-bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'coastal-city-detailed.blend'))
+bpy.ops.wm.save_as_mainfile(filepath=str(SCENES/'coastal-city-detailed.blend'))
 print('SHOWCASE_SAVED',len(scene.objects),flush=True)
 bpy.ops.render.render(write_still=True)
 scene.camera=close
-scene.render.filepath=str(ROOT/'showcase-closeup.png')
+scene.render.filepath=str(RENDERS/'showcase-closeup.png')
 scene.render.resolution_x=1600
 scene.render.resolution_y=1100
 bpy.ops.render.render(write_still=True)

@@ -2,9 +2,10 @@
 from pathlib import Path
 import bpy
 from mathutils import Vector
-root=Path('/Users/riccardo/Downloads/gta-blender-world')
-bpy.ops.wm.save_as_mainfile(filepath=str(root/'detailed-before-navigation.blend'))
-bpy.ops.wm.open_mainfile(filepath=str(root/'coastal-city-detailed.blend'))
+root=Path(__file__).resolve().parent
+SCENES=root/'scenes'
+bpy.ops.wm.save_as_mainfile(filepath=str(SCENES/'detailed-before-navigation.blend'))
+bpy.ops.wm.open_mainfile(filepath=str(SCENES/'coastal-city-detailed.blend'))
 eye=Vector((54,-26,1.8))
 target=Vector((32,-14,3.4))
 rotation=(target-eye).to_track_quat('-Z','Y')
@@ -22,4 +23,4 @@ for screen in bpy.data.screens:
             space.region_3d.view_perspective='PERSP'
             space.overlay.show_overlays=False
 bpy.context.workspace.name='City Walk'
-bpy.ops.wm.save_as_mainfile(filepath=str(root/'coastal-city-detailed.blend'))
+bpy.ops.wm.save_as_mainfile(filepath=str(SCENES/'coastal-city-detailed.blend'))

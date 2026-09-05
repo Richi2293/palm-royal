@@ -3,8 +3,8 @@
 # running the pipeline first. The detailed ones are 280-430 MB and stay out.
 *.blend
 *.blend1
-!palm-royal.blend
-!coastal-city.blend
+!scenes/palm-royal.blend
+!scenes/coastal-city.blend
 
 # Third-party assets downloaded at build time by download_assets.py and
 # download_cafe_assets.py. Only the manifests are tracked, so the exact set of
@@ -14,6 +14,9 @@ assets/*
 !assets/*/
 assets/*/*
 !assets/*/*.json
+
+# Python bytecode
+__pycache__/
 
 # macOS
 .DS_Store

@@ -1,6 +1,6 @@
 # Miramar interiors and window renovation
 
-Open `coastal-city-interiors.blend`. The previous city versions remain separate.
+Open `scenes/coastal-city-interiors.blend`. The previous city versions remain separate.
 
 ## Changes
 
@@ -18,4 +18,4 @@ The default render camera is 07. Select another camera and use Ctrl+Numpad 0 or 
 
 Material Preview can simplify transmission. Use Rendered shading or F12 for the final glass and lighting appearance. The finished preview PNGs are provided separately. This is an editable architectural scene, not a collision-tested game level.
 
-Run `upgrade_windows_cafe.py` with Blender in background mode to rebuild from `coastal-city-detailed.blend`. The file packs its textures. Credits and original asset sources are listed in [asset-credits.md](asset-credits.md).
+Run `upgrade_windows_cafe.py` with Blender in background mode to rebuild from `scenes/coastal-city-detailed.blend`. The file packs its textures. Credits and original asset sources are listed in [asset-credits.md](asset-credits.md).

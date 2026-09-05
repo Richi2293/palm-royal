@@ -6,12 +6,14 @@ from pathlib import Path
 import bpy
 from mathutils import Vector
 ROOT=Path(__file__).resolve().parent
+SCENES=ROOT/'scenes'
+RENDERS=ROOT/'renders'
 ASSETS=ROOT/'assets'
 for filename in ['build_world.py','build_city.py','refine_showcase.py','build_showcase.py']:
     for node in ast.parse((ROOT/filename).read_text()).body:
         if isinstance(node,ast.FunctionDef) and node.name in ['material','text','area_light','collection','place','box','rod','lathe','load_template','instance','camera']:
             exec(compile(ast.Module(body=[node],type_ignores=[]),filename,'exec'))
-bpy.ops.wm.open_mainfile(filepath=str(ROOT/'coastal-city-detailed.blend'))
+bpy.ops.wm.open_mainfile(filepath=str(SCENES/'coastal-city-detailed.blend'))
 scene=bpy.context.scene
 random.seed(106)
 MESH_CACHE={}
@@ -273,7 +275,7 @@ scene.camera=bpy.data.objects['07 - Cafe materials and street props']
 scene.cycles.samples=40
 scene.render.resolution_x=1600
 scene.render.resolution_y=1100
-scene.render.filepath=str(ROOT/'miramar-exterior.png')
+scene.render.filepath=str(RENDERS/'miramar-exterior.png')
 for screen in bpy.data.screens:
     for area in screen.areas:
         if area.type=='VIEW_3D':
@@ -281,13 +283,13 @@ for screen in bpy.data.screens:
 scene['Window upgrade']='True wall openings, clear transmission glass, frames, curtains and furnished room depth.'
 scene['Cafe interior']='Open customer circulation, booths, furniture, walnut floor, marble bar, espresso machine, pastry case, menu and warm pendant lighting.'
 bpy.ops.file.pack_all()
-bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'coastal-city-interiors.blend'))
+bpy.ops.wm.save_as_mainfile(filepath=str(SCENES/'coastal-city-interiors.blend'))
 print('INTERIOR_SAVED',len(scene.objects),flush=True)
 bpy.ops.render.render(write_still=True)
 scene.camera=inside
-scene.render.filepath=str(ROOT/'miramar-interior.png')
+scene.render.filepath=str(RENDERS/'miramar-interior.png')
 bpy.ops.render.render(write_still=True)
 scene.camera=window_camera
-scene.render.filepath=str(ROOT/'miramar-windows.png')
+scene.render.filepath=str(RENDERS/'miramar-windows.png')
 bpy.ops.render.render(write_still=True)
 print('INTERIOR_COMPLETE',flush=True)

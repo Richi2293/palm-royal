@@ -12,7 +12,8 @@ import bpy
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE = ROOT / 'coastal-city.blend'
+SCENES = ROOT / 'scenes'
+SOURCE = SCENES / 'coastal-city.blend'
 TARGET = ROOT / 'viewer' / 'city.glb'
 
 bpy.ops.wm.open_mainfile(filepath=str(SOURCE))
