@@ -13,7 +13,7 @@ def fetch_json(name):
     if not path.exists():
         request=urllib.request.Request('https://api.polyhaven.com/files/'+name,headers=HEADERS)
         path.write_bytes(urllib.request.urlopen(request,timeout=60).read())
-    return json.loads(path.read_text())
+    return json.loads(path.read_text(encoding='utf-8'))
 
 def download(item):
     """Download one resource and validate the provider checksum when available."""
@@ -48,5 +48,5 @@ for relative in ['GLB/CarConcept.glb','LICENSE.md','README.md']:
     jobs.append((ROOT/'CarConcept'/Path(relative).name,{'url':base+relative}))
 with ThreadPoolExecutor(max_workers=6) as executor:
     list(executor.map(download,jobs))
-(ROOT/'download-manifest.json').write_text(json.dumps({'models':models,'textures':textures,'files':[str(path.relative_to(ROOT)) for path,_ in jobs]},indent=2))
+(ROOT/'download-manifest.json').write_text(json.dumps({'models':models,'textures':textures,'files':[str(path.relative_to(ROOT)) for path,_ in jobs]},indent=2),encoding='utf-8')
 print('ASSETS_COMPLETE',len(jobs),flush=True)

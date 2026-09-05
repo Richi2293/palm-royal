@@ -13,7 +13,7 @@ def manifest(name):
     if not path.exists():
         request=urllib.request.Request('https://api.polyhaven.com/files/'+name,headers=headers)
         path.write_bytes(urllib.request.urlopen(request,timeout=45).read())
-    return json.loads(path.read_text())
+    return json.loads(path.read_text(encoding='utf-8'))
 
 jobs=[]
 for name in ['bar_chair_round_01','croissant','carrot_cake']:

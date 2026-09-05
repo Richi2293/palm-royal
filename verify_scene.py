@@ -72,11 +72,11 @@ def main():
     bpy.ops.wm.open_mainfile(filepath=str(target))
     measured = measure()
 
-    stored = json.loads(EXPECTATIONS.read_text()) if EXPECTATIONS.exists() else {}
+    stored = json.loads(EXPECTATIONS.read_text(encoding='utf-8')) if EXPECTATIONS.exists() else {}
 
     if dump:
         stored[target.name] = measured
-        EXPECTATIONS.write_text(json.dumps(stored, indent=2, sort_keys=True) + '\n')
+        EXPECTATIONS.write_text(json.dumps(stored, indent=2, sort_keys=True) + '\n', encoding='utf-8')
         print(f'Recorded reference values for {target.name}:')
         for key in sorted(measured):
             print(f'  {key:12} {measured[key]:>9}')

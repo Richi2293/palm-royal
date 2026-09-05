@@ -7,7 +7,7 @@ import bpy
 from mathutils import Vector
 
 OUTPUT = Path(__file__).resolve().parent
-SOURCE = (OUTPUT / 'build_world.py').read_text()
+SOURCE = (OUTPUT / 'build_world.py').read_text(encoding='utf-8')
 # Reuse the original palette and prop constructors while replacing the layout.
 # MARKER delimits the shared preamble inside build_world.py. Both files depend
 # on that comment staying exactly as it is: keep them in sync when editing.
