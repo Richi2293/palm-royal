@@ -7,7 +7,9 @@ from mathutils import Vector
 
 OUTPUT = Path(__file__).resolve().parent
 SCENES = OUTPUT / 'scenes'
+SCENES.mkdir(exist_ok=True)
 RENDERS = OUTPUT / 'renders'
+RENDERS.mkdir(exist_ok=True)
 random.seed(18)
 bpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete(use_global=False)

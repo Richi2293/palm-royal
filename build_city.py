@@ -8,7 +8,9 @@ from mathutils import Vector
 
 OUTPUT = Path(__file__).resolve().parent
 SCENES = OUTPUT / 'scenes'
+SCENES.mkdir(exist_ok=True)
 RENDERS = OUTPUT / 'renders'
+RENDERS.mkdir(exist_ok=True)
 SOURCE = (OUTPUT / 'build_world.py').read_text()
 # Reuse the original palette and prop constructors while replacing the layout.
 exec(SOURCE[:SOURCE.index('# Fine procedural')])

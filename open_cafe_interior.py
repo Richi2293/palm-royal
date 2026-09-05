@@ -4,6 +4,7 @@ import bpy
 from mathutils import Vector
 root=Path(__file__).resolve().parent
 SCENES=root/'scenes'
+SCENES.mkdir(exist_ok=True)
 bpy.ops.wm.save_as_mainfile(filepath=str(SCENES/'detailed-before-interiors.blend'))
 bpy.ops.wm.open_mainfile(filepath=str(SCENES/'coastal-city-interiors.blend'))
 camera=bpy.data.objects['08 - Inside Cafe Miramar']

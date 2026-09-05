@@ -7,7 +7,9 @@ import bpy
 from mathutils import Vector
 ROOT=Path(__file__).resolve().parent
 SCENES=ROOT/'scenes'
+SCENES.mkdir(exist_ok=True)
 RENDERS=ROOT/'renders'
+RENDERS.mkdir(exist_ok=True)
 ASSETS=ROOT/'assets'
 for filename in ['build_world.py','build_city.py','refine_showcase.py','build_showcase.py']:
     for node in ast.parse((ROOT/filename).read_text()).body:

@@ -4,6 +4,7 @@ import bpy
 from mathutils import Vector
 root=Path(__file__).resolve().parent
 SCENES=root/'scenes'
+SCENES.mkdir(exist_ok=True)
 bpy.ops.wm.save_as_mainfile(filepath=str(SCENES/'detailed-before-navigation.blend'))
 bpy.ops.wm.open_mainfile(filepath=str(SCENES/'coastal-city-detailed.blend'))
 eye=Vector((54,-26,1.8))

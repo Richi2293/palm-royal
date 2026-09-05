@@ -4,7 +4,9 @@ import bpy
 from mathutils import Vector
 output=Path(__file__).resolve().parent
 SCENES=output/'scenes'
+SCENES.mkdir(exist_ok=True)
 RENDERS=output/'renders'
+RENDERS.mkdir(exist_ok=True)
 bpy.ops.wm.open_mainfile(filepath=str(SCENES/'coastal-city.blend'))
 scene=bpy.context.scene
 camera=bpy.data.objects['02 - Walk Ocean Boulevard']

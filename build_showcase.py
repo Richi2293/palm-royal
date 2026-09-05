@@ -7,7 +7,9 @@ import bpy
 from mathutils import Vector, Matrix
 ROOT=Path(__file__).resolve().parent
 SCENES=ROOT/'scenes'
+SCENES.mkdir(exist_ok=True)
 RENDERS=ROOT/'renders'
+RENDERS.mkdir(exist_ok=True)
 ASSETS=ROOT/'assets'
 # Reuse only constructors, never the scene-generation statements.
 for filename in ['build_world.py','build_city.py']:

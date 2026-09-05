@@ -4,7 +4,9 @@ import bpy
 from mathutils import Vector
 root=Path(__file__).resolve().parent
 SCENES=root/'scenes'
+SCENES.mkdir(exist_ok=True)
 RENDERS=root/'renders'
+RENDERS.mkdir(exist_ok=True)
 bpy.ops.wm.open_mainfile(filepath=str(SCENES/'coastal-city-detailed.blend'))
 scene=bpy.context.scene
 camera=bpy.data.objects['06 - Detailed Palm Royal block']
