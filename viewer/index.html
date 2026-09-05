@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Palm Royal: explore the coastal city</title>
+<meta name="description" content="Walk through a tropical Art Deco coastal city generated in Blender by AI-written Python scripts.">
+<meta property="og:title" content="Palm Royal: explore the coastal city">
+<meta property="og:description" content="A tropical Art Deco coastal city generated in Blender by AI-written Python scripts. Explore it in your browser.">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    --ink: #f2ece4;
+    --muted: #9aa3ad;
+    --panel: rgba(12, 18, 26, 0.82);
+    --edge: rgba(242, 236, 228, 0.14);
+    --neon: #ff3d7f;
+    --aqua: #2fe0bd;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; background: #0a1018; }
+  body {
+    font: 14px/1.5 ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  canvas { display: block; }
+
+  .panel {
+    position: fixed;
+    background: var(--panel);
+    border: 1px solid var(--edge);
+    border-radius: 10px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  #title {
+    top: 16px; left: 16px;
+    padding: 12px 16px;
+    max-width: min(360px, calc(100vw - 32px));
+  }
+  #title h1 {
+    margin: 0;
+    font-size: 15px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  #title h1 span { color: var(--neon); }
+  #title p { margin: 6px 0 0; color: var(--muted); font-size: 12.5px; }
+  #title a { color: var(--aqua); text-decoration: none; }
+  #title a:hover { text-decoration: underline; }
+
+  #hud {
+    bottom: 16px; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    max-width: calc(100vw - 32px);
+  }
+  button {
+    font: inherit;
+    font-size: 12.5px;
+    color: var(--ink);
+    background: rgba(242, 236, 228, .07);
+    border: 1px solid var(--edge);
+    border-radius: 7px;
+    padding: 7px 13px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  button:hover { background: rgba(242, 236, 228, .13); }
+  button[aria-pressed="true"] {
+    background: var(--aqua);
+    border-color: var(--aqua);
+    color: #05201b;
+    font-weight: 600;
+  }
+  #hint { color: var(--muted); font-size: 12px; padding-right: 6px; }
+  @media (max-width: 720px) { #hint { display: none; } }
+
+  #loader {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 18px;
+    background: #0a1018;
+    text-align: center;
+    padding: 24px;
+    transition: opacity .6s ease;
+  }
+  #loader.done { opacity: 0; pointer-events: none; }
+  #loader h2 {
+    margin: 0;
+    font-size: 13px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  #bar { width: min(240px, 60vw); height: 2px; background: rgba(242, 236, 228, .15); overflow: hidden; }
+  #bar i { display: block; height: 100%; width: 0%; background: var(--neon); transition: width .25s ease; }
+  #loader small { color: var(--muted); font-size: 12px; max-width: 32ch; }
+
+  #lock {
+    position: fixed;
+    inset: 0;
+    display: none;
+    place-content: center;
+    justify-items: center;
+    gap: 10px;
+    background: rgba(6, 10, 16, .75);
+    cursor: pointer;
+    text-align: center;
+    padding: 24px;
+  }
+  #lock.on { display: grid; }
+  #lock strong { font-size: 16px; letter-spacing: .04em; }
+  #lock span { color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div id="title" class="panel">
+  <h1>Palm <span>Royal</span></h1>
+  <p>A coastal city generated in Blender by AI-written Python scripts.
+     <a href="https://github.com/Richi2293/palm-royal" target="_blank" rel="noopener">Source on GitHub</a></p>
+</div>
+
+<div id="hud" class="panel">
+  <span id="hint">Drag to orbit, scroll to zoom</span>
+  <button id="orbit" aria-pressed="true">Orbit</button>
+  <button id="walk" aria-pressed="false">Walk</button>
+  <button id="reset">Reset view</button>
+</div>
+
+<div id="lock">
+  <strong>Click to walk</strong>
+  <span>W A S D to move, mouse to look, Shift to run, Esc to exit</span>
+</div>
+
+<div id="loader">
+  <h2>Loading the city</h2>
+  <div id="bar"><i></i></div>
+  <small id="status">3.7 MB of Draco-compressed geometry</small>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+
+const EYE_HEIGHT = 1.7;
+const WALK_SPEED = 9;
+const RUN_MULTIPLIER = 2.6;
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x1d3a4d);
+scene.fog = new THREE.Fog(0x1d3a4d, 220, 700);
+
+// Dusk lighting that echoes the Cycles renders without the cost of shadow maps.
+scene.add(new THREE.HemisphereLight(0x8fb8d6, 0x2a2118, 1.6));
+const sun = new THREE.DirectionalLight(0xffd9b0, 2.1);
+sun.position.set(-120, 150, 90);
+scene.add(sun);
+const rim = new THREE.DirectionalLight(0x4fd6ff, 0.6);
+rim.position.set(140, 60, -110);
+scene.add(rim);
+
+const camera = new THREE.PerspectiveCamera(58, innerWidth / innerHeight, 0.5, 3000);
+
+const orbit = new OrbitControls(camera, renderer.domElement);
+orbit.enableDamping = true;
+orbit.dampingFactor = 0.06;
+orbit.maxPolarAngle = Math.PI * 0.495;
+orbit.minDistance = 12;
+orbit.maxDistance = 1200;
+
+const walker = new PointerLockControls(camera, renderer.domElement);
+scene.add(walker.object);
+
+let home = { position: new THREE.Vector3(), target: new THREE.Vector3() };
+let city = null;
+let ceilingY = 200;
+let groundY = 0;
+
+const down = new THREE.Vector3(0, -1, 0);
+const probe = new THREE.Raycaster();
+const probeOrigin = new THREE.Vector3();
+
+/**
+ * Height of the first surface under a point, so the walker stands on the
+ * street or the pavement instead of sinking to the lowest point of the map,
+ * which is the sea floor.
+ */
+function surfaceHeight(x, z, fallback) {
+  if (!city) return fallback;
+  probeOrigin.set(x, ceilingY, z);
+  probe.set(probeOrigin, down);
+  const hit = probe.intersectObject(city, true)[0];
+  return hit ? hit.point.y : fallback;
+}
+
+/**
+ * Collapse meshes that share geometry and material into instanced draws.
+ * The city is built from linked duplicates, so this turns roughly twelve
+ * thousand draw calls into a few hundred.
+ */
+function collapseToInstances(root) {
+  root.updateMatrixWorld(true);
+  const meshes = [];
+  root.traverse((node) => { if (node.isMesh) meshes.push(node); });
+
+  const groups = new Map();
+  for (const mesh of meshes) {
+    const material = Array.isArray(mesh.material)
+      ? mesh.material.map((entry) => entry.uuid).join(',')
+      : mesh.material.uuid;
+    const key = `${mesh.geometry.uuid}|${material}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(mesh);
+  }
+
+  const batched = new THREE.Group();
+  let draws = 0;
+  for (const group of groups.values()) {
+    draws += 1;
+    if (group.length < 2) continue;
+    const instanced = new THREE.InstancedMesh(group[0].geometry, group[0].material, group.length);
+    group.forEach((mesh, index) => instanced.setMatrixAt(index, mesh.matrixWorld));
+    instanced.instanceMatrix.needsUpdate = true;
+    // Instance-aware bounds keep raycasting against the ground cheap.
+    instanced.computeBoundingBox();
+    instanced.computeBoundingSphere();
+    instanced.frustumCulled = false;
+    batched.add(instanced);
+    group.forEach((mesh) => mesh.removeFromParent());
+  }
+  root.add(batched);
+  return draws;
+}
+
+function frameScene(root) {
+  const box = new THREE.Box3().setFromObject(root);
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  groundY = box.min.y;
+  ceilingY = box.max.y + 10;
+  city = root;
+
+  const reach = Math.max(size.x, size.z);
+  home.target.set(center.x, box.min.y + size.y * 0.25, center.z);
+  home.position.set(center.x + reach * 0.55, box.min.y + reach * 0.42, center.z + reach * 0.72);
+
+  scene.fog.near = reach * 0.55;
+  scene.fog.far = reach * 2.4;
+  camera.far = reach * 6;
+  camera.updateProjectionMatrix();
+  sun.position.set(center.x - reach, box.min.y + reach, center.z + reach * 0.7);
+  resetView();
+}
+
+function resetView() {
+  camera.position.copy(home.position);
+  orbit.target.copy(home.target);
+  orbit.update();
+}
+
+const loader = new GLTFLoader();
+const draco = new DRACOLoader();
+draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/libs/draco/');
+loader.setDRACOLoader(draco);
+
+const overlay = document.getElementById('loader');
+const progress = document.querySelector('#bar i');
+const status = document.getElementById('status');
+
+loader.load(
+  'city.glb',
+  (gltf) => {
+    const draws = collapseToInstances(gltf.scene);
+    scene.add(gltf.scene);
+    frameScene(gltf.scene);
+    status.textContent = `${draws} batches ready`;
+    overlay.classList.add('done');
+    animate();
+  },
+  (event) => {
+    if (!event.lengthComputable) return;
+    const percent = Math.round((event.loaded / event.total) * 100);
+    progress.style.width = `${percent}%`;
+    status.textContent = `${percent}% of 3.7 MB`;
+  },
+  () => {
+    overlay.classList.remove('done');
+    status.textContent = 'The city failed to load. Check the browser console.';
+  },
+);
+
+const orbitButton = document.getElementById('orbit');
+const walkButton = document.getElementById('walk');
+const lockPrompt = document.getElementById('lock');
+const hint = document.getElementById('hint');
+
+function setMode(mode) {
+  const walking = mode === 'walk';
+  orbitButton.setAttribute('aria-pressed', String(!walking));
+  walkButton.setAttribute('aria-pressed', String(walking));
+  orbit.enabled = !walking;
+  lockPrompt.classList.toggle('on', walking && !walker.isLocked);
+  hint.textContent = walking
+    ? 'W A S D to move, Shift to run, Esc to exit'
+    : 'Drag to orbit, scroll to zoom';
+
+  if (walking) {
+    // Drop the walker onto whatever surface sits under the current orbit target.
+    const x = orbit.target.x;
+    const z = orbit.target.z + 40;
+    walker.object.position.set(x, surfaceHeight(x, z, groundY) + EYE_HEIGHT, z);
+    camera.rotation.set(0, 0, 0);
+  } else {
+    walker.unlock();
+    resetView();
+  }
+}
+
+orbitButton.addEventListener('click', () => setMode('orbit'));
+walkButton.addEventListener('click', () => setMode('walk'));
+document.getElementById('reset').addEventListener('click', () => setMode('orbit'));
+lockPrompt.addEventListener('click', () => walker.lock());
+walker.addEventListener('lock', () => lockPrompt.classList.remove('on'));
+walker.addEventListener('unlock', () => {
+  if (walkButton.getAttribute('aria-pressed') === 'true') lockPrompt.classList.add('on');
+});
+
+const pressed = new Set();
+addEventListener('keydown', (event) => pressed.add(event.code));
+addEventListener('keyup', (event) => pressed.delete(event.code));
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const delta = Math.min(clock.getDelta(), 0.1);
+
+  if (walker.isLocked) {
+    const speed = WALK_SPEED * delta * (pressed.has('ShiftLeft') || pressed.has('ShiftRight') ? RUN_MULTIPLIER : 1);
+    const forward = (pressed.has('KeyW') ? 1 : 0) - (pressed.has('KeyS') ? 1 : 0);
+    const strafe = (pressed.has('KeyD') ? 1 : 0) - (pressed.has('KeyA') ? 1 : 0);
+    if (forward) walker.moveForward(forward * speed);
+    if (strafe) walker.moveRight(strafe * speed);
+    if (forward || strafe) {
+      // The walker follows the surface below it. There is no collision
+      // solving, so walls and buildings can be walked through.
+      const { x, y, z } = walker.object.position;
+      const target = surfaceHeight(x, z, groundY) + EYE_HEIGHT;
+      walker.object.position.y = y + (target - y) * Math.min(1, delta * 8);
+    }
+  } else {
+    orbit.update();
+  }
+
+  renderer.render(scene, camera);
+}
+</script>
+</body>
+</html>
