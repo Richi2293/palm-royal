@@ -1,4 +1,4 @@
-# Coastal City — Detailed Central Block
+# Coastal City: Detailed Central Block
 
 Open `coastal-city-detailed.blend`. The large coastal city is preserved, with a higher-detail showcase around Palm Royal and Café Miramar near world coordinates (30, -14).
 
@@ -16,9 +16,9 @@ The rest of the city remains the earlier stylized context. This is a focused qua
 
 ## Views
 
-- Camera 06: Detailed Palm Royal block — default view.
-- Camera 07: Cafe materials and street props — close-up for surface inspection.
-- Cameras 01–05: the earlier city exploration viewpoints.
+- Camera 06: Detailed Palm Royal block, default view.
+- Camera 07: Cafe materials and street props, close-up for surface inspection.
+- Cameras 01-05: the earlier city exploration viewpoints.
 
 Use the scene camera selector to switch views. View > Navigation > Walk Navigation provides first-person viewport navigation. W/A/S/D moves and the mouse looks around.
 

@@ -1,4 +1,4 @@
-# Palm Royal — Tropical Street Diorama
+# Palm Royal: Tropical Street Diorama
 
 An original, stylized tropical neighborhood in the spirit of a 1980s Art Deco coastal resort. All geometry is created procedurally; no external assets or add-ons are required.
 

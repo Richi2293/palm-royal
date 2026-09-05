@@ -1,4 +1,4 @@
-# Asset credits — Coastal City Detailed
+# Asset credits: Coastal City Detailed
 
 ## Poly Haven
 
@@ -30,7 +30,7 @@ Materials were adapted with scene-scale mapping, color adjustments, surface reli
 
 ## Car Concept
 
-Car Concept — model and textures by Eric Chadwick.
+Car Concept, model and textures by Eric Chadwick.
 Copyright 2024 Darmstadt Graphics Group GmbH.
 License: Creative Commons Attribution 4.0 International.
 https://creativecommons.org/licenses/by/4.0/
