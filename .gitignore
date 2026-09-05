@@ -1,0 +1,15 @@
+# Generated Blender scenes. Rebuild them by running the build scripts in order.
+*.blend
+*.blend1
+
+# Third-party assets downloaded at build time by download_assets.py and
+# download_cafe_assets.py. Only the manifests are tracked, so the exact set of
+# source assets stays reproducible without committing ~500 MB of binaries.
+assets/*
+!assets/*.json
+!assets/*/
+assets/*/*
+!assets/*/*.json
+
+# macOS
+.DS_Store

@@ -1,0 +1,25 @@
+"""Open the renovated city and position its free viewport inside the cafe."""
+from pathlib import Path
+import bpy
+from mathutils import Vector
+root=Path('/Users/riccardo/Downloads/gta-blender-world')
+bpy.ops.wm.save_as_mainfile(filepath=str(root/'detailed-before-interiors.blend'))
+bpy.ops.wm.open_mainfile(filepath=str(root/'coastal-city-interiors.blend'))
+camera=bpy.data.objects['08 - Inside Cafe Miramar']
+rotation=camera.rotation_euler.to_quaternion()
+for screen in bpy.data.screens:
+    for area in screen.areas:
+        if area.type=='VIEW_3D':
+            space=area.spaces.active
+            space.lens=25
+            space.lock_camera=False
+            space.region_3d.view_rotation=rotation
+            space.region_3d.view_distance=8
+            space.region_3d.view_location=camera.location+rotation@Vector((0,0,-8))
+            space.region_3d.view_perspective='PERSP'
+            space.shading.type='MATERIAL'
+            space.shading.use_scene_lights=True
+            space.shading.use_scene_world=True
+            space.show_gizmo=False
+            space.overlay.show_overlays=False
+bpy.ops.wm.save_as_mainfile(filepath=str(root/'coastal-city-interiors.blend'))

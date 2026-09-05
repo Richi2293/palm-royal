@@ -1,0 +1,178 @@
+[
+  {
+    "name": "GLB",
+    "path": "Models/CarConcept/GLB",
+    "sha": "73134ab58c32cf6ebd085ae81607df5f73088e4c",
+    "size": 0,
+    "url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/GLB?ref=main",
+    "html_url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/GLB",
+    "git_url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/73134ab58c32cf6ebd085ae81607df5f73088e4c",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/GLB?ref=main",
+      "git": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/73134ab58c32cf6ebd085ae81607df5f73088e4c",
+      "html": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/GLB"
+    }
+  },
+  {
+    "name": "LICENSE.md",
+    "path": "Models/CarConcept/LICENSE.md",
+    "sha": "990158bba3010def61c0808679ff33d65cb99e0b",
+    "size": 945,
+    "url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/LICENSE.md?ref=main",
+    "html_url": "https://github.com/KhronosGroup/glTF-Sample-Assets/blob/main/Models/CarConcept/LICENSE.md",
+    "git_url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/blobs/990158bba3010def61c0808679ff33d65cb99e0b",
+    "download_url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/LICENSE.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/LICENSE.md?ref=main",
+      "git": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/blobs/990158bba3010def61c0808679ff33d65cb99e0b",
+      "html": "https://github.com/KhronosGroup/glTF-Sample-Assets/blob/main/Models/CarConcept/LICENSE.md"
+    }
+  },
+  {
+    "name": "README.body.md",
+    "path": "Models/CarConcept/README.body.md",
+    "sha": "4f2138e6cbe3f0ee45f5665d32e902b8f0f33712",
+    "size": 18991,
+    "url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/README.body.md?ref=main",
+    "html_url": "https://github.com/KhronosGroup/glTF-Sample-Assets/blob/main/Models/CarConcept/README.body.md",
+    "git_url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/blobs/4f2138e6cbe3f0ee45f5665d32e902b8f0f33712",
+    "download_url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/README.body.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/README.body.md?ref=main",
+      "git": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/blobs/4f2138e6cbe3f0ee45f5665d32e902b8f0f33712",
+      "html": "https://github.com/KhronosGroup/glTF-Sample-Assets/blob/main/Models/CarConcept/README.body.md"
+    }
+  },
+  {
+    "name": "README.md",
+    "path": "Models/CarConcept/README.md",
+    "sha": "6fb275d8d5d1c37844b8998fb170369259ef8283",
+    "size": 20383,
+    "url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/README.md?ref=main",
+    "html_url": "https://github.com/KhronosGroup/glTF-Sample-Assets/blob/main/Models/CarConcept/README.md",
+    "git_url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/blobs/6fb275d8d5d1c37844b8998fb170369259ef8283",
+    "download_url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/README.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/README.md?ref=main",
+      "git": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/blobs/6fb275d8d5d1c37844b8998fb170369259ef8283",
+      "html": "https://github.com/KhronosGroup/glTF-Sample-Assets/blob/main/Models/CarConcept/README.md"
+    }
+  },
+  {
+    "name": "glTF-Binary",
+    "path": "Models/CarConcept/glTF-Binary",
+    "sha": "c2947f7a23aa01954dc13bc7ee7c50568b5515e1",
+    "size": 0,
+    "url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/glTF-Binary?ref=main",
+    "html_url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/glTF-Binary",
+    "git_url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/c2947f7a23aa01954dc13bc7ee7c50568b5515e1",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/glTF-Binary?ref=main",
+      "git": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/c2947f7a23aa01954dc13bc7ee7c50568b5515e1",
+      "html": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/glTF-Binary"
+    }
+  },
+  {
+    "name": "glTF-JPG",
+    "path": "Models/CarConcept/glTF-JPG",
+    "sha": "b4cb7ec42e34379ca8c431fc04b8544d9ab6a48e",
+    "size": 0,
+    "url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/glTF-JPG?ref=main",
+    "html_url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/glTF-JPG",
+    "git_url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/b4cb7ec42e34379ca8c431fc04b8544d9ab6a48e",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/glTF-JPG?ref=main",
+      "git": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/b4cb7ec42e34379ca8c431fc04b8544d9ab6a48e",
+      "html": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/glTF-JPG"
+    }
+  },
+  {
+    "name": "glTF-KTX-BasisU-Draco",
+    "path": "Models/CarConcept/glTF-KTX-BasisU-Draco",
+    "sha": "d0fcd0eef91b9d1268ac031f18edddff61e7d632",
+    "size": 0,
+    "url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/glTF-KTX-BasisU-Draco?ref=main",
+    "html_url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/glTF-KTX-BasisU-Draco",
+    "git_url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/d0fcd0eef91b9d1268ac031f18edddff61e7d632",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/glTF-KTX-BasisU-Draco?ref=main",
+      "git": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/d0fcd0eef91b9d1268ac031f18edddff61e7d632",
+      "html": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/glTF-KTX-BasisU-Draco"
+    }
+  },
+  {
+    "name": "glTF-WEBP",
+    "path": "Models/CarConcept/glTF-WEBP",
+    "sha": "ff5f4f6e9b14f42b2f08ba1a9539799d84fb6455",
+    "size": 0,
+    "url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/glTF-WEBP?ref=main",
+    "html_url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/glTF-WEBP",
+    "git_url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/ff5f4f6e9b14f42b2f08ba1a9539799d84fb6455",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/glTF-WEBP?ref=main",
+      "git": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/ff5f4f6e9b14f42b2f08ba1a9539799d84fb6455",
+      "html": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/glTF-WEBP"
+    }
+  },
+  {
+    "name": "glTF",
+    "path": "Models/CarConcept/glTF",
+    "sha": "70f1ce577071f0d2a35cad40eb12d7b6333cb08a",
+    "size": 0,
+    "url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/glTF?ref=main",
+    "html_url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/glTF",
+    "git_url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/70f1ce577071f0d2a35cad40eb12d7b6333cb08a",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/glTF?ref=main",
+      "git": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/70f1ce577071f0d2a35cad40eb12d7b6333cb08a",
+      "html": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/glTF"
+    }
+  },
+  {
+    "name": "metadata.json",
+    "path": "Models/CarConcept/metadata.json",
+    "sha": "2a792cb3852d6319bc13c67851a50e887c20527f",
+    "size": 1334,
+    "url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/metadata.json?ref=main",
+    "html_url": "https://github.com/KhronosGroup/glTF-Sample-Assets/blob/main/Models/CarConcept/metadata.json",
+    "git_url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/blobs/2a792cb3852d6319bc13c67851a50e887c20527f",
+    "download_url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/metadata.json",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/metadata.json?ref=main",
+      "git": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/blobs/2a792cb3852d6319bc13c67851a50e887c20527f",
+      "html": "https://github.com/KhronosGroup/glTF-Sample-Assets/blob/main/Models/CarConcept/metadata.json"
+    }
+  },
+  {
+    "name": "screenshot",
+    "path": "Models/CarConcept/screenshot",
+    "sha": "759346dd38d9ccab73ef289921cc5f94d1fd1c17",
+    "size": 0,
+    "url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/screenshot?ref=main",
+    "html_url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/screenshot",
+    "git_url": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/759346dd38d9ccab73ef289921cc5f94d1fd1c17",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/contents/Models/CarConcept/screenshot?ref=main",
+      "git": "https://api.github.com/repos/KhronosGroup/glTF-Sample-Assets/git/trees/759346dd38d9ccab73ef289921cc5f94d1fd1c17",
+      "html": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept/screenshot"
+    }
+  }
+]
