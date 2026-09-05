@@ -6,12 +6,13 @@ What follows is what the repository actually shows about that loop, including th
 
 ## The models
 
-Three models worked on this city: Claude (through Claude Code), GPT 5.6 and GPT 6.
+Every piece of geometry here was produced by a language model. I never opened Blender's modelling tools.
 
-> To complete before merging: which model handled which stage, whether the same
-> task was ever given to more than one model, and the concrete failures worth
-> naming. This section is the reason anyone reads this file, so it should not be
-> vague.
+Which model wrote which stage was not recorded, and I cannot reconstruct it after the fact. The build started with GPT 6. The current phase alternates between Opus 5 through Claude Code, Fable 5.1, GPT 6 and GPT 5.6 Sol, switching as the work goes on.
+
+That gap is worth stating rather than papering over, because it is the ordinary failure of projects like this one: the output gets kept, the process does not. Nothing in the repository records who wrote what, so the provenance is gone.
+
+The one exception is accidental. The models left a fingerprint in the formatting, and it is unambiguous enough to read off the files: see [the code style section](#the-code-style-changes-visibly-between-stages) below.
 
 ## The pipeline is incremental, not regenerative
 

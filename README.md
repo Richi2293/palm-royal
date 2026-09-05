@@ -6,7 +6,7 @@
 
 **A GTA-inspired tropical city, modelled entirely in Blender by AI models writing Python.**
 
-There is no manual modelling in this project. Every building, palm tree, kerb stone, neon tube and window frame exists because a language model wrote a Blender Python script that generates it. I ran the scripts, looked at the renders, said what was wrong, and the model rewrote the script. The repository is the record of that loop.
+There is no manual modelling in this project. Every building, palm tree, kerb stone, neon tube and window frame exists because a language model wrote a Blender Python script that generates it. I ran the scripts, looked at what came out, said what was wrong, and the model rewrote the script. The repository is the record of that loop.
 
 It is a personal experiment, run for the fun of finding out how far current models can push a 3D scene when the only interface they have is code.
 
@@ -111,7 +111,7 @@ assets/     manifests for the CC0 assets, fetched at build time
 
 ## Documentation
 
-- [How it was built](docs/how-it-was-built.md): the models, the workflow, and the parts that did not work.
+- [How it was built](docs/how-it-was-built.md): the models, the pipeline, and the quirks the workflow left behind.
 - [The coastal city](docs/city.md): scale, districts, cameras, navigation.
 - [The detailed block](docs/detailed-block.md): the quality study and its sources.
 - [Interiors and windows](docs/interiors.md): real openings, glazing, the cafe interior.
