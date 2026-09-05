@@ -8,6 +8,7 @@
 <meta property="og:title" content="Palm Royal: explore the coastal city">
 <meta property="og:description" content="A tropical Art Deco coastal city generated in Blender by AI-written Python scripts. Explore it in your browser.">
 <meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a1018'/%3E%3Crect x='6' y='12' width='7' height='14' fill='%23ff3d7f'/%3E%3Crect x='16' y='6' width='7' height='20' fill='%232fe0bd'/%3E%3C/svg%3E">
 <style>
   :root {
     --ink: #f2ece4;
@@ -166,30 +167,67 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 const EYE_HEIGHT = 1.7;
 const WALK_SPEED = 9;
 const RUN_MULTIPLIER = 2.6;
 
+// Blender stores colours in linear space, so the values lifted from the scene
+// are fed to three.js the same way rather than through an sRGB hex literal.
+const linear = (r, g, b) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
+
 const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.setSize(innerWidth, innerHeight);
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
+// The Blender scene renders through AgX, so the viewer uses the same transform.
+renderer.toneMapping = THREE.AgXToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x1d3a4d);
-scene.fog = new THREE.Fog(0x1d3a4d, 220, 700);
+// World background of coastal-city.blend: colour (0.085, 0.14, 0.24) at strength 0.5.
+const sky = linear(0.085 * 0.5, 0.14 * 0.5, 0.24 * 0.5);
+scene.background = sky;
+scene.fog = new THREE.Fog(sky, 220, 700);
 
-// Dusk lighting that echoes the Cycles renders without the cost of shadow maps.
-scene.add(new THREE.HemisphereLight(0x8fb8d6, 0x2a2118, 1.6));
-const sun = new THREE.DirectionalLight(0xffd9b0, 2.1);
-sun.position.set(-120, 150, 90);
+// The lights below mirror the ones in the Blender scene rather than inventing a
+// look: a golden hour sun, a wide blue sky fill, and the warm boulevard lamps.
+const fill = new THREE.HemisphereLight(linear(0.35, 0.55, 1.0), linear(0.16, 0.1, 0.06), 1.1);
+scene.add(fill);
+
+const sun = new THREE.DirectionalLight(linear(1.0, 0.69, 0.43), 2.6);
+sun.position.set(-80, 120, 100); // Blender (-80, -100, 120), converted to Y-up.
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+// A large normalBias pushes shadow lookups into neighbouring geometry and
+// drowns the whole city in self-shadow. Measured: 0.6 leaves the streets at
+// a third of their unshadowed brightness, 0.05 keeps the cast shadows only.
+sun.shadow.bias = -0.0005;
+sun.shadow.normalBias = 0.05;
 scene.add(sun);
-const rim = new THREE.DirectionalLight(0x4fd6ff, 0.6);
-rim.position.set(140, 60, -110);
-scene.add(rim);
+scene.add(sun.target);
+
+// The sixteen boulevard crossings, taken from the warm area lights that sit
+// over them at z = 8 in Blender. They double as walk-mode spawn points: they
+// are the only positions known to be on tarmac rather than inside a block.
+const CROSSINGS = [];
+for (const x of [-95, -35, 25, 75]) {
+  for (const y of [-85, -25, 35, 95]) CROSSINGS.push([x, -y]);
+}
+
+const boulevard = new THREE.Group();
+for (const [x, z] of CROSSINGS) {
+  const lamp = new THREE.PointLight(linear(1.0, 0.48, 0.18), 260, 140, 2);
+  lamp.position.set(x, 8, z);
+  boulevard.add(lamp);
+}
+scene.add(boulevard);
 
 const camera = new THREE.PerspectiveCamera(58, innerWidth / innerHeight, 0.5, 3000);
 
@@ -202,6 +240,16 @@ orbit.maxDistance = 1200;
 
 const walker = new PointerLockControls(camera, renderer.domElement);
 scene.add(walker.object);
+
+// Emissive windows and neon are what read as "dusk" in the Cycles renders, so
+// the viewer gives them a restrained bloom rather than leaving them flat.
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+// The tower crowns are emissive at four times base strength, so the threshold
+// sits above them: any lower and the rooftops burn out into white blobs.
+const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.26, 0.5, 1.15);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
 
 let home = { position: new THREE.Vector3(), target: new THREE.Vector3() };
 let city = null;
@@ -245,6 +293,11 @@ function collapseToInstances(root) {
     groups.get(key).push(mesh);
   }
 
+  for (const mesh of meshes) {
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+  }
+
   const batched = new THREE.Group();
   let draws = 0;
   for (const group of groups.values()) {
@@ -257,6 +310,8 @@ function collapseToInstances(root) {
     instanced.computeBoundingBox();
     instanced.computeBoundingSphere();
     instanced.frustumCulled = false;
+    instanced.castShadow = true;
+    instanced.receiveShadow = true;
     batched.add(instanced);
     group.forEach((mesh) => mesh.removeFromParent());
   }
@@ -264,24 +319,67 @@ function collapseToInstances(root) {
   return draws;
 }
 
+/**
+ * Bounds of the city itself. The ocean is a 500 x 460 metre plane around a
+ * 280 x 250 metre island, so framing the whole scene would push the camera
+ * almost twice as far back as it needs to be and centre it on open water.
+ */
+function cityBounds(root) {
+  const box = new THREE.Box3();
+  const scratch = new THREE.Box3();
+  root.traverse((node) => {
+    if (!node.isMesh) return;
+    const material = Array.isArray(node.material) ? node.material[0] : node.material;
+    if (material && /water|ocean/i.test(material.name)) return;
+    box.union(scratch.setFromObject(node));
+  });
+  return box.isEmpty() ? new THREE.Box3().setFromObject(root) : box;
+}
+
 function frameScene(root) {
-  const box = new THREE.Box3().setFromObject(root);
+  const full = new THREE.Box3().setFromObject(root);
+  const box = cityBounds(root);
   const size = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
   groundY = box.min.y;
-  ceilingY = box.max.y + 10;
+  ceilingY = full.max.y + 10;
   city = root;
 
   const reach = Math.max(size.x, size.z);
   home.target.set(center.x, box.min.y + size.y * 0.25, center.z);
-  home.position.set(center.x + reach * 0.55, box.min.y + reach * 0.42, center.z + reach * 0.72);
+  home.position.set(center.x + reach * 0.5, box.min.y + reach * 0.42, center.z + reach * 0.66);
 
-  scene.fog.near = reach * 0.55;
-  scene.fog.far = reach * 2.4;
-  camera.far = reach * 6;
+  scene.fog.near = reach * 0.7;
+  scene.fog.far = reach * 3.2;
+  camera.far = reach * 8;
   camera.updateProjectionMatrix();
-  sun.position.set(center.x - reach, box.min.y + reach, center.z + reach * 0.7);
+
+  // Fit the shadow frustum to the city so the 4K map is not spent on the sea.
+  const span = reach * 0.62;
+  sun.position.set(center.x - span, box.max.y + span * 1.5, center.z + span * 1.25);
+  sun.target.position.copy(center);
+  sun.target.updateMatrixWorld();
+  Object.assign(sun.shadow.camera, { left: -span, right: span, top: span, bottom: -span, near: 1, far: span * 6 });
+  sun.shadow.camera.updateProjectionMatrix();
+
   resetView();
+}
+
+/**
+ * Nearest boulevard crossing that is actually at street level. Dropping the
+ * walker under the orbit target instead lands it on a rooftop whenever the
+ * camera happens to be looking at a block.
+ */
+function spawnPoint() {
+  const candidates = CROSSINGS
+    .map(([x, z]) => ({ x, z, y: surfaceHeight(x, z, groundY) }))
+    .filter((spot) => spot.y < groundY + 3);
+  if (!candidates.length) return { x: orbit.target.x, z: orbit.target.z, y: groundY };
+  candidates.sort((a, b) => (
+    (a.x - orbit.target.x) ** 2 + (a.z - orbit.target.z) ** 2
+    - ((b.x - orbit.target.x) ** 2 + (b.z - orbit.target.z) ** 2)
+  ));
+  return candidates[0];
 }
 
 function resetView() {
@@ -321,6 +419,8 @@ loader.load(
   },
 );
 
+let walkMode = false;
+
 const orbitButton = document.getElementById('orbit');
 const walkButton = document.getElementById('walk');
 const lockPrompt = document.getElementById('lock');
@@ -328,6 +428,7 @@ const hint = document.getElementById('hint');
 
 function setMode(mode) {
   const walking = mode === 'walk';
+  walkMode = walking;
   orbitButton.setAttribute('aria-pressed', String(!walking));
   walkButton.setAttribute('aria-pressed', String(walking));
   orbit.enabled = !walking;
@@ -337,11 +438,11 @@ function setMode(mode) {
     : 'Drag to orbit, scroll to zoom';
 
   if (walking) {
-    // Drop the walker onto whatever surface sits under the current orbit target.
-    const x = orbit.target.x;
-    const z = orbit.target.z + 40;
-    walker.object.position.set(x, surfaceHeight(x, z, groundY) + EYE_HEIGHT, z);
-    camera.rotation.set(0, 0, 0);
+    const spot = spawnPoint();
+    walker.object.position.set(spot.x, spot.y + EYE_HEIGHT, spot.z);
+    // Face east along the boulevard, towards the beach, rather than into the
+    // facade that happens to sit on the far side of the crossing.
+    camera.rotation.set(0, -Math.PI / 2, 0);
   } else {
     walker.unlock();
     resetView();
@@ -364,7 +465,12 @@ addEventListener('resize', () => {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(innerWidth, innerHeight);
+  composer.setSize(innerWidth, innerHeight);
+  bloom.setSize(innerWidth, innerHeight);
 });
+
+// Handle for debugging and for the screenshot scripts that drive the viewer.
+window.viewer = { THREE, scene, camera, renderer, composer, bloom, sun, fill, boulevard, orbit, walker, resetView };
 
 const clock = new THREE.Clock();
 
@@ -372,24 +478,29 @@ function animate() {
   requestAnimationFrame(animate);
   const delta = Math.min(clock.getDelta(), 0.1);
 
-  if (walker.isLocked) {
-    const speed = WALK_SPEED * delta * (pressed.has('ShiftLeft') || pressed.has('ShiftRight') ? RUN_MULTIPLIER : 1);
-    const forward = (pressed.has('KeyW') ? 1 : 0) - (pressed.has('KeyS') ? 1 : 0);
-    const strafe = (pressed.has('KeyD') ? 1 : 0) - (pressed.has('KeyA') ? 1 : 0);
-    if (forward) walker.moveForward(forward * speed);
-    if (strafe) walker.moveRight(strafe * speed);
-    if (forward || strafe) {
-      // The walker follows the surface below it. There is no collision
-      // solving, so walls and buildings can be walked through.
-      const { x, y, z } = walker.object.position;
-      const target = surfaceHeight(x, z, groundY) + EYE_HEIGHT;
-      walker.object.position.y = y + (target - y) * Math.min(1, delta * 8);
+  // Orbit only drives the camera outside walk mode. Left running while the
+  // walker waits for pointer lock, its maxPolarAngle clamp forbids sitting
+  // below the orbit target and lifts the camera off the street.
+  if (walkMode) {
+    if (walker.isLocked) {
+      const speed = WALK_SPEED * delta * (pressed.has('ShiftLeft') || pressed.has('ShiftRight') ? RUN_MULTIPLIER : 1);
+      const forward = (pressed.has('KeyW') ? 1 : 0) - (pressed.has('KeyS') ? 1 : 0);
+      const strafe = (pressed.has('KeyD') ? 1 : 0) - (pressed.has('KeyA') ? 1 : 0);
+      if (forward) walker.moveForward(forward * speed);
+      if (strafe) walker.moveRight(strafe * speed);
+      if (forward || strafe) {
+        // The walker follows the surface below it. There is no collision
+        // solving, so walls and buildings can be walked through.
+        const { x, y, z } = walker.object.position;
+        const target = surfaceHeight(x, z, groundY) + EYE_HEIGHT;
+        walker.object.position.y = y + (target - y) * Math.min(1, delta * 8);
+      }
     }
   } else {
     orbit.update();
   }
 
-  renderer.render(scene, camera);
+  composer.render();
 }
 </script>
 </body>
