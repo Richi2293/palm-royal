@@ -1,5 +1,8 @@
 # Coastal City
 
+> This guide covers one stage of the pipeline. The scene it names is a build intermediate: run the pipeline from the [README](../README.md#reproduce) to produce it. The finished city is `scenes/palm-royal-city.blend`.
+
+
 ## Scale and contents
 The expanded city contains 280 × 250 meters of terrain (70,000 square meters), approximately 30.4 times the original 59 × 39 meter diorama footprint. A marina and surrounding ocean extend beyond the land footprint. The expansion adds distinct connected streets and districts; the original geometry has not simply been enlarged.
 

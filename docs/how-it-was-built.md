@@ -24,7 +24,7 @@ build_showcase.py    ->  scenes/coastal-city-detailed.blend   (opens scenes/coas
 refine_showcase.py   ->  scenes/coastal-city-detailed.blend   (in place)
 finalize_showcase.py ->  scenes/coastal-city-detailed.blend   (in place)
 upgrade_windows_cafe.py -> scenes/coastal-city-interiors.blend
-upgrade_sign.py      ->  scenes/coastal-city-neon.blend
+upgrade_sign.py      ->  scenes/palm-royal-city.blend
 ```
 
 This falls out of how the work was requested. Each session asked for a change to what already existed, so each script was written to mutate a saved scene rather than to rebuild the world. It has a real cost: to reproduce stage 5 you must run all seven scripts in order, and a change to stage 2 invalidates everything downstream.

@@ -1,10 +1,8 @@
-# Generated Blender scenes. Rebuild them by running the build scripts in order.
-# The two lightweight scenes are tracked so the project can be opened without
-# running the pipeline first. The detailed ones are 280-430 MB and stay out.
+# Generated Blender scenes. The finished city is 407 MB of packed textures,
+# well past what GitHub accepts, and the earlier stages are intermediates that
+# the build scripts recreate. Rebuild them by running the pipeline in order.
 *.blend
 *.blend1
-!scenes/palm-royal.blend
-!scenes/coastal-city.blend
 
 # Third-party assets downloaded at build time by download_assets.py and
 # download_cafe_assets.py. Only the manifests are tracked, so the exact set of

@@ -54,13 +54,9 @@ Each stage opens the scene the previous one saved and changes it, so the city gr
 
 ## See it
 
-Three ways in, from no effort to full rebuild.
-
 **In the browser.** [richi2293.github.io/palm-royal](https://richi2293.github.io/palm-royal/) loads the stage 2 city as 3.7 MB of Draco-compressed geometry. Orbit it, or switch to walk mode and use W A S D to move down the boulevards. Nothing to install.
 
-**In Blender.** `scenes/palm-royal.blend` and `scenes/coastal-city.blend` are small enough to be tracked in this repository, so you can clone and open them directly in Blender 5.1.2 or later. See [docs/city.md](docs/city.md) for the cameras and the walk navigation controls.
-
-**From scratch.** The stage 3, 4 and 5 scenes are 280 to 430 MB each and are not tracked. Rebuild them with the pipeline below.
+**In Blender.** The finished city is `scenes/palm-royal-city.blend`. No Blender scene is tracked here: that file is 407 MB, almost all of it packed 4K textures, and GitHub caps a single file at 100 MB. Build it by running the pipeline below, then open it in Blender 5.1.2 or later. See [docs/city.md](docs/city.md) for the cameras and the walk navigation controls.
 
 ## Reproduce
 
@@ -90,6 +86,8 @@ $BLENDER --background --factory-startup --python viewer/export_web.py
 
 `download_assets.py` pulls roughly 500 MB from Poly Haven and verifies every file against the provider checksum. Only the manifests are tracked here, so the asset set stays reproducible without committing the binaries.
 
+The pipeline leaves one scene per stage in `scenes/`. Only the last one, `palm-royal-city.blend`, is the finished city; the earlier four are intermediates that exist because each stage opens what the previous one saved, and they can be deleted once the run completes.
+
 ## What this is not
 
 - Not a game. There is no gameplay, no physics, no collision, no AI traffic. The walk mode in the web viewer glides through walls on purpose.
@@ -100,7 +98,7 @@ $BLENDER --background --factory-startup --python viewer/export_web.py
 ## Layout
 
 ```
-scenes/     Blender scenes, one per stage. Open these.
+scenes/     the finished city, once the pipeline has built it
 renders/    the Cycles output of each stage
 viewer/     the three.js browser viewer and its glTF export script
 docs/       stage guides, the build story, asset credits

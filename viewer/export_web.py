@@ -16,6 +16,14 @@ SCENES = ROOT / 'scenes'
 SOURCE = SCENES / 'coastal-city.blend'
 TARGET = ROOT / 'viewer' / 'city.glb'
 
+if not SOURCE.exists():
+    raise SystemExit(
+        f'{SOURCE} is missing. It is a pipeline intermediate, not a tracked file.\n'
+        'Rebuild it first, which takes well under a minute:\n'
+        '    blender --background --factory-startup --python build_world.py\n'
+        '    blender --background --factory-startup --python build_city.py'
+    )
+
 bpy.ops.wm.open_mainfile(filepath=str(SOURCE))
 scene = bpy.context.scene
 

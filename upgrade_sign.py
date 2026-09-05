@@ -96,6 +96,6 @@ scene.render.resolution_x=1600
 scene.render.resolution_y=1100
 scene.render.filepath=str(RENDERS/'miramar-neon-sign.png')
 scene['Sign direction']='Original tropical Art Deco signage inspired by 1980s Miami nightlife; aqua and coral neon, dimensional letters, sunrise waves, and a double-sided blade sign.'
-bpy.ops.wm.save_as_mainfile(filepath=str(SCENES/'coastal-city-neon.blend'))
+bpy.ops.wm.save_as_mainfile(filepath=str(SCENES/'palm-royal-city.blend'))
 bpy.ops.render.render(write_still=True)
 print('NEON_COMPLETE',flush=True)

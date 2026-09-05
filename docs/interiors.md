@@ -1,5 +1,8 @@
 # Miramar interiors and window renovation
 
+> This guide covers one stage of the pipeline. The scene it names is a build intermediate: run the pipeline from the [README](../README.md#reproduce) to produce it. The finished city is `scenes/palm-royal-city.blend`.
+
+
 Open `scenes/coastal-city-interiors.blend`. The previous city versions remain separate.
 
 ## Changes

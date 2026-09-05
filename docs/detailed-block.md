@@ -1,5 +1,8 @@
 # Coastal City: Detailed Central Block
 
+> This guide covers one stage of the pipeline. The scene it names is a build intermediate: run the pipeline from the [README](../README.md#reproduce) to produce it. The finished city is `scenes/palm-royal-city.blend`.
+
+
 Open `scenes/coastal-city-detailed.blend`. The large coastal city is preserved, with a higher-detail showcase around Palm Royal and Café Miramar near world coordinates (30, -14).
 
 ## What was upgraded
