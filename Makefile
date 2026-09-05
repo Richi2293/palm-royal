@@ -5,14 +5,33 @@
 # seeds, so a clean checkout rebuilds the same geometry rather than something
 # merely similar. Run "make verify" to confirm that.
 #
-# Blender is expected at the macOS default location. Override it anywhere else:
+# Blender is located automatically: first on PATH, then at the usual install
+# locations on macOS and Linux. Override it when yours lives elsewhere, or when
+# you keep several versions around:
 #
-#     make all BLENDER=/usr/local/bin/blender
+#     make all BLENDER=/path/to/blender
 #
-# Tested against Blender 5.1.2.
+# Tested against Blender 5.1.2. "make check" reports the version in use.
 
-BLENDER ?= /Applications/Blender.app/Contents/MacOS/Blender
-PYTHON  ?= python3
+ifeq ($(origin BLENDER), undefined)
+BLENDER := $(shell command -v blender 2>/dev/null || \
+	for candidate in \
+		/Applications/Blender.app/Contents/MacOS/Blender \
+		"$$HOME/Applications/Blender.app/Contents/MacOS/Blender" \
+		/usr/local/bin/blender \
+		/usr/bin/blender \
+		/snap/bin/blender \
+		/opt/blender/blender; do \
+		[ -x "$$candidate" ] && echo "$$candidate" && break; \
+	done)
+endif
+ifeq ($(strip $(BLENDER)),)
+BLENDER := blender
+endif
+
+ifeq ($(origin PYTHON), undefined)
+PYTHON := $(shell command -v python3 2>/dev/null || command -v python 2>/dev/null || echo python3)
+endif
 
 RUN = "$(BLENDER)" --background --factory-startup --python
 
@@ -50,17 +69,25 @@ help:
 	@echo "  make clean      delete the generated .blend files (renders are kept)"
 	@echo ""
 	@echo "Blender in use: $(BLENDER)"
+	@echo "Override with:   make <target> BLENDER=/path/to/blender"
 
 all: neon diorama
 
 check:
-	@test -x "$(BLENDER)" || { \
-	  echo "Blender not found at: $(BLENDER)"; \
-	  echo "Install it, or point the build at your copy:"; \
+	@command -v "$(BLENDER)" >/dev/null 2>&1 || { \
+	  echo "Blender not found."; \
+	  echo ""; \
+	  echo "Looked on PATH and at the usual macOS and Linux install locations."; \
+	  echo "Install Blender, or point the build at your copy:"; \
 	  echo "    make all BLENDER=/path/to/blender"; \
+	  echo ""; \
+	  echo "On Windows, run make from Git Bash or WSL and pass the executable:"; \
+	  echo "    make all BLENDER='/c/Program Files/Blender Foundation/Blender 5.1/blender.exe'"; \
 	  exit 1; }
-	@echo "Blender found:"
-	@"$(BLENDER)" --version | head -1
+	@$(RUN) check_blender.py 2>/dev/null | grep -E "supported|Warning:" || { \
+	  echo "Blender at '$(BLENDER)' failed the version check:"; \
+	  $(RUN) check_blender.py 2>&1 | tail -12; \
+	  exit 1; }
 
 # ---------------------------------------------------------------- source assets
 
@@ -89,16 +116,16 @@ $(CITY): build_city.py refine_city.py build_world.py | check
 	$(RUN) refine_city.py
 
 # Replaces the central block with detailed architecture and scanned PBR assets.
-$(DETAILED): $(CITY) $(ASSET_MANIFEST) build_showcase.py refine_showcase.py finalize_showcase.py prepare_navigation.py
+$(DETAILED): $(CITY) $(ASSET_MANIFEST) build_showcase.py refine_showcase.py finalize_showcase.py prepare_navigation.py | check
 	$(RUN) build_showcase.py
 	$(RUN) refine_showcase.py
 	$(RUN) finalize_showcase.py
 	$(RUN) prepare_navigation.py
 
-$(INTERIORS): $(DETAILED) $(CAFE_ASSET) upgrade_windows_cafe.py
+$(INTERIORS): $(DETAILED) $(CAFE_ASSET) upgrade_windows_cafe.py | check
 	$(RUN) upgrade_windows_cafe.py
 
-$(NEON): $(INTERIORS) upgrade_sign.py
+$(NEON): $(INTERIORS) upgrade_sign.py | check
 	$(RUN) upgrade_sign.py
 
 # ---------------------------------------------------------------------- checks
