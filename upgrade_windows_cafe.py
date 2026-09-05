@@ -8,7 +8,7 @@ from mathutils import Vector
 ROOT=Path(__file__).resolve().parent
 ASSETS=ROOT/'assets'
 for filename in ['build_world.py','build_city.py','refine_showcase.py','build_showcase.py']:
-    for node in ast.parse((ROOT/filename).read_text()).body:
+    for node in ast.parse((ROOT/filename).read_text(encoding='utf-8')).body:
         if isinstance(node,ast.FunctionDef) and node.name in ['material','text','area_light','collection','place','box','rod','lathe','load_template','instance','camera']:
             exec(compile(ast.Module(body=[node],type_ignores=[]),filename,'exec'))
 bpy.ops.wm.open_mainfile(filepath=str(ROOT/'coastal-city-detailed.blend'))

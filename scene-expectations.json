@@ -1,0 +1,47 @@
+{
+  "coastal-city-detailed.blend": {
+    "cameras": 7,
+    "collections": 32,
+    "lights": 29,
+    "materials": 81,
+    "meshes": 12808,
+    "objects": 12895,
+    "vertices": 845427
+  },
+  "coastal-city-interiors.blend": {
+    "cameras": 9,
+    "collections": 42,
+    "lights": 56,
+    "materials": 137,
+    "meshes": 14057,
+    "objects": 14193,
+    "vertices": 933404
+  },
+  "coastal-city-neon.blend": {
+    "cameras": 9,
+    "collections": 43,
+    "lights": 57,
+    "materials": 143,
+    "meshes": 14070,
+    "objects": 14224,
+    "vertices": 933460
+  },
+  "coastal-city.blend": {
+    "cameras": 5,
+    "collections": 17,
+    "lights": 18,
+    "materials": 23,
+    "meshes": 11928,
+    "objects": 11971,
+    "vertices": 26592
+  },
+  "palm-royal.blend": {
+    "cameras": 2,
+    "collections": 7,
+    "lights": 9,
+    "materials": 20,
+    "meshes": 652,
+    "objects": 669,
+    "vertices": 10720
+  }
+}

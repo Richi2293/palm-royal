@@ -1,5 +1,9 @@
 # Asset credits: Coastal City Detailed
 
+The build scripts and documentation in this repository are MIT licensed.
+The source assets listed below are third-party work and keep their own
+licenses, summarised here with links to the originals.
+
 ## Poly Haven
 
 Powered by Poly Haven: https://polyhaven.com/

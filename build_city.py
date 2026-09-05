@@ -7,9 +7,18 @@ import bpy
 from mathutils import Vector
 
 OUTPUT = Path(__file__).resolve().parent
-SOURCE = (OUTPUT / 'build_world.py').read_text()
+SOURCE = (OUTPUT / 'build_world.py').read_text(encoding='utf-8')
 # Reuse the original palette and prop constructors while replacing the layout.
-exec(SOURCE[:SOURCE.index('# Fine procedural')])
+# MARKER delimits the shared preamble inside build_world.py. Both files depend
+# on that comment staying exactly as it is: keep them in sync when editing.
+MARKER = '# Fine procedural'
+if MARKER not in SOURCE:
+    raise SystemExit(
+        f'build_city.py could not find the marker {MARKER!r} in build_world.py. '
+        'That comment delimits the shared setup reused here. Restore it, or '
+        'update MARKER in this file to match the new delimiter.'
+    )
+exec(SOURCE[:SOURCE.index(MARKER)])
 for definition in ast.parse(SOURCE).body:
     if isinstance(definition, ast.FunctionDef):
         exec(compile(ast.Module(body=[definition], type_ignores=[]), '<asset-library>', 'exec'))
